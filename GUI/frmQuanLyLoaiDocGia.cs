@@ -58,14 +58,43 @@ namespace QLThuVien
         private void bnt_Load_Click(object sender, EventArgs e)
         {
             loadData_Vao_GridView();
+            loadLoaiDocGia_Combobox();
+        }
+        private void loadLoaiDocGia_Combobox()
+        {
+            List<LoaiDocGiaDTO> listLoaiDocGia = ldgBus.select();
+
+            if (listLoaiDocGia == null)
+            {
+                MessageBox.Show("Có lỗi khi lấy loại độc gải từ DB.");
+                return;
+            }
+            comboBox_MaLoai.DataSource = new BindingSource(listLoaiDocGia, String.Empty);
+            comboBox_MaLoai.DisplayMember = "maLoaiDocGia";
+            comboBox_MaLoai.ValueMember = "maLoaiDocGia";
+
+
+            CurrencyManager myCurrencyManager = (CurrencyManager)this.BindingContext[comboBox_MaLoai.DataSource];
+            myCurrencyManager.Refresh();
+          //  MessageBox.Show(comboBox_MaLoai.SelectedValue.ToString());
+            textBox_TenLoaiDocGia.Text = listLoaiDocGia[comboBox_MaLoai.SelectedIndex].TenLoaiDocGia.ToString();
+
+
         }
 
         private void frmQuanLyLoaiDocGia_Load(object sender, EventArgs e)
         {
-        
+            
             ldgBus = new LoaiDocGiaBUS();
+            loadLoaiDocGia_Combobox();
+            loadData_Vao_GridView();
 
+        }
 
+        private void comboBox_MaLoai_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<LoaiDocGiaDTO> listLoaiDocGia = ldgBus.select();
+            textBox_TenLoaiDocGia.Text = listLoaiDocGia[comboBox_MaLoai.SelectedIndex].TenLoaiDocGia.ToString();
         }
     }
 }
