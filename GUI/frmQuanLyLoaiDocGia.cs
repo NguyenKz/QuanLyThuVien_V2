@@ -11,6 +11,9 @@ using DTO;
 using BUS;
 namespace QLThuVien
 {
+    /// <summary>
+    /// adfasdf
+    /// </summary>
     public partial class frmQuanLyLoaiDocGia : Form
     {
         public frmQuanLyLoaiDocGia()
