@@ -24,7 +24,7 @@ namespace QLThuVien
         private LoaiDocGiaBUS ldgBus;
         private void loadData_Vao_GridView()
         {
-            List<LoaiDocGiaDTO> listKieuNau = ldgBus.select();
+            List<LoaiDocGiaDTO> listKieuNau = ldgBus.select("");
 
             if (listKieuNau == null)
             {
@@ -61,43 +61,184 @@ namespace QLThuVien
         private void bnt_Load_Click(object sender, EventArgs e)
         {
             loadData_Vao_GridView();
-            loadLoaiDocGia_Combobox();
+       
         }
-        private void loadLoaiDocGia_Combobox()
-        {
-            List<LoaiDocGiaDTO> listLoaiDocGia = ldgBus.select();
-
-            if (listLoaiDocGia == null)
-            {
-                MessageBox.Show("Có lỗi khi lấy loại độc gải từ DB.");
-                return;
-            }
-            comboBox_MaLoai.DataSource = new BindingSource(listLoaiDocGia, String.Empty);
-            comboBox_MaLoai.DisplayMember = "maLoaiDocGia";
-            comboBox_MaLoai.ValueMember = "maLoaiDocGia";
-
-
-            CurrencyManager myCurrencyManager = (CurrencyManager)this.BindingContext[comboBox_MaLoai.DataSource];
-            myCurrencyManager.Refresh();
-          //  MessageBox.Show(comboBox_MaLoai.SelectedValue.ToString());
-            textBox_TenLoaiDocGia.Text = listLoaiDocGia[comboBox_MaLoai.SelectedIndex].TenLoaiDocGia.ToString();
-
-
-        }
+      
 
         private void frmQuanLyLoaiDocGia_Load(object sender, EventArgs e)
         {
             
             ldgBus = new LoaiDocGiaBUS();
-            loadLoaiDocGia_Combobox();
+          
             loadData_Vao_GridView();
 
         }
 
-        private void comboBox_MaLoai_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void dvg_QuanLyLoaiDocGia_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            List<LoaiDocGiaDTO> listLoaiDocGia = ldgBus.select();
-            textBox_TenLoaiDocGia.Text = listLoaiDocGia[comboBox_MaLoai.SelectedIndex].TenLoaiDocGia.ToString();
+
+        }
+
+        private void getThongTinMa(string ma)
+        {
+            LoaiDocGiaDTO dg = new LoaiDocGiaDTO();
+
+            Console.WriteLine(" Ma da chon: " + ma);
+
+            List<LoaiDocGiaDTO> listDocGia = ldgBus.select(ma);
+            if (listDocGia == null) return;
+            Console.WriteLine(" Get thong tin thanh cong.");
+            dg = listDocGia[0];
+            if (dg == null)
+            {
+                MessageBox.Show("Get thong tin DG tu db that bai");
+            }
+            else
+            {
+                this.textBox_TenLoaiDocGia.Text = dg.TenLoaiDocGia;
+
+            }
+        }
+
+        private void dvg_QuanLyLoaiDocGia_MouseClick(object sender, MouseEventArgs e)
+        {
+            int index = this.dvg_QuanLyLoaiDocGia.CurrentRow.Index;
+            string MaDG = dvg_QuanLyLoaiDocGia.Rows[index].Cells[0].Value + "";
+            this.textBox_Ma.Text = MaDG;
+            getThongTinMa(MaDG);
+
+
+        }
+
+        private void button_Xoa_Click(object sender, EventArgs e)
+        {
+
+            //1. Map data from GUI
+            LoaiDocGiaDTO ldg = new LoaiDocGiaDTO();
+            ldg.MaLoaiDocGia = this.textBox_Ma.Text;
+            
+            DialogResult dlr = MessageBox.Show("Bạn có muốn xoa loai voi ma  " + ldg.MaLoaiDocGia + " khổng?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (dlr == DialogResult.Yes)
+            {
+
+                //2. Kiểm tra data hợp lệ or not
+
+                //3. Thêm vào DB
+                bool kq = ldgBus.xoa(ldg);
+                if (kq == false)
+                    MessageBox.Show("Xóa loai độc giả thất bại. Vui lòng kiểm tra lại dũ liệu");
+                else
+                {
+                    MessageBox.Show("Xóa loai độc giả thành công");
+                    loadData_Vao_GridView();
+                    this.dvg_QuanLyLoaiDocGia.FirstDisplayedScrollingRowIndex = 0;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Không xóa.");
+            }
+        }
+        private String TaoMa(String Ma)
+        {
+            String s = "";
+            for (int i = 0; i < Ma.Length; i++)
+            {
+                if ((Ma[i] >= '0' & Ma[i] <= '9'))
+                {
+                    s += Ma[i];
+                }
+            }
+            Console.WriteLine("Ma moi nhat: " + s);
+            int _s = int.Parse(s);
+            _s++;
+            String _ma = "" + _s;
+            while (_ma.Length < 3)
+            {
+                _ma = "0" + _ma;
+            }
+            _ma = "Loai" + _ma;
+            return _ma;
+        }
+        private void button_Them_Click(object sender, EventArgs e)
+        {
+            //1. Map data from GUI
+            LoaiDocGiaDTO ldg = new LoaiDocGiaDTO();
+            List<LoaiDocGiaDTO> listldg = new List<LoaiDocGiaDTO>();
+            listldg = ldgBus.select("");
+            String Ma = this.TaoMa(listldg[listldg.Count - 1].MaLoaiDocGia);
+
+
+
+            DialogResult dlr = MessageBox.Show("Bạn có muốn thêm thẻ với mã " + Ma + " không?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (dlr == DialogResult.Yes)
+            {
+                ldg.MaLoaiDocGia = Ma;
+
+                ldg.TenLoaiDocGia = this.textBox_TenLoaiDocGia.Text;
+               
+              
+                //2. Kiểm tra data hợp lệ or not
+                if (ldg.TenLoaiDocGia.Length<=0)
+                {
+
+                    MessageBox.Show("Thêm thất bại, vui lòng kiểm tra lại thông tin.");
+                    return;
+                }
+
+
+                //3. Thêm vào DB
+                bool kq = ldgBus.them(ldg);
+                if (kq == false)
+                    MessageBox.Show("Thêm Độc giả thất bại. Vui lòng kiểm tra lại dũ liệu");
+                else
+                {
+                    MessageBox.Show("Thêm Độc giả thành công");
+                    this.loadData_Vao_GridView();
+                   
+
+                }
+            }
+            else
+                MessageBox.Show("Không thêm.");
+
+
+
+        }
+
+        private void button_Sua_Click(object sender, EventArgs e)
+        {
+            //1. Map data from GUI
+            LoaiDocGiaDTO ldg = new LoaiDocGiaDTO();
+            ldg.MaLoaiDocGia = this.textBox_Ma.Text;
+            ldg.TenLoaiDocGia = this.textBox_TenLoaiDocGia.Text;
+
+
+            DialogResult dlr = MessageBox.Show("Bạn có muốn sửa thẻ với mã " + ldg.MaLoaiDocGia + " không?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (dlr == DialogResult.Yes)
+            {
+
+
+                //2. Kiểm tra data hợp lệ or not
+                if (ldg.TenLoaiDocGia.Length <= 0)
+                {
+
+                    MessageBox.Show("Sửa thất bại, vui lòng kiểm tra lại thông tin.");
+                    return;
+                }
+
+
+                //3. Thêm vào DB
+                bool kq = ldgBus.sua(ldg);
+                if (kq == false)
+                    MessageBox.Show("Sửa Độc giả thất bại. Vui lòng kiểm tra lại dũ liệu");
+                else
+                {
+                    MessageBox.Show("Sửa Độc giả thành công");
+                    this.loadData_Vao_GridView();
+                }
+            }
         }
     }
 }

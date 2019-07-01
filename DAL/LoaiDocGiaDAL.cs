@@ -75,7 +75,7 @@ namespace DAL
                     cmd.Connection = con;
                     cmd.CommandType = System.Data.CommandType.Text;
                     cmd.CommandText = query;
-                    cmd.Parameters.AddWithValue("@maDocGia", ldg.MaLoaiDocGia);
+                    cmd.Parameters.AddWithValue("@maLoaiDocGia", ldg.MaLoaiDocGia);
                     try
                     {
                         con.Open();
@@ -95,10 +95,12 @@ namespace DAL
 
         public bool sua(LoaiDocGiaDTO ldg)
         {
+            Console.WriteLine("Sua loai doc gia.");
             string query = string.Empty;
             query += "UPDATE [dbo].[tblLoaiDocGia]  SET ";
-            query += "[tenLoaiDocGia]] = @[tenLoaiDocGia],";
-
+            query += "[tenLoaiDocGia] = @tenLoaiDocGia ";
+            query += "WHERE [maLoaiDocGia] = @maLoaiDocGia";
+            Console.WriteLine("Query: " + query);
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
 
@@ -108,15 +110,19 @@ namespace DAL
                     cmd.CommandType = System.Data.CommandType.Text;
                     cmd.CommandText = query;
                     cmd.Parameters.AddWithValue("@tenLoaiDocGia", ldg.TenLoaiDocGia);
+                    cmd.Parameters.AddWithValue("@maLoaiDocGia", ldg.MaLoaiDocGia);
+                    Console.WriteLine("Bat dau query.");
                     try
                     {
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
                         con.Dispose();
+                        Console.WriteLine("ex query thanh cong.");
                     }
                     catch (Exception ex)
                     {
+                        Console.WriteLine("ex query that bai.");
                         con.Close();
                         return false;
                     }
@@ -124,11 +130,17 @@ namespace DAL
             }
             return true;
         }
+      
 
-        public List<LoaiDocGiaDTO> select()
+        public List<LoaiDocGiaDTO> select(String Ma)
         {
             string query = string.Empty;
             query += "select * from[dbo].[tblLoaiDocGia]";
+
+            if (Ma.Length > 0) {
+                query += "WHERE [dbo].[tblLoaiDocGia].[maLoaiDocGia] =@maLoaiDocGia";
+            }
+                
 
 
             List<LoaiDocGiaDTO> lsLoaiDocGia = new List<LoaiDocGiaDTO>();
@@ -140,6 +152,10 @@ namespace DAL
                 {
                     cmd.Connection = con;
                     cmd.CommandType = System.Data.CommandType.Text;
+                    if (Ma.Length > 0)
+                    {
+                        cmd.Parameters.AddWithValue("maLoaiDocGia", Ma);
+                    }
                     cmd.CommandText = query;
 
                     try

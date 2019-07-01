@@ -33,9 +33,9 @@ namespace BUS
             return re;
         }
 
-        public List<LoaiDocGiaDTO> select()
+        public List<LoaiDocGiaDTO> select(String Ma)
         {
-            return ldgDAL.select();
+            return ldgDAL.select(Ma);
 
         }
     }

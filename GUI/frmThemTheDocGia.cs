@@ -46,7 +46,7 @@ namespace QLThuVien
 
         private void loadLoaiDocGia_Combobox()
         {
-            List<LoaiDocGiaDTO> listLoaiDocGia = ldgBus.select();
+            List<LoaiDocGiaDTO> listLoaiDocGia = ldgBus.select("");
 
             if (listLoaiDocGia == null)
             {

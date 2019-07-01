@@ -27,7 +27,7 @@ namespace QLThuVien
 
         private void loadLoaiDocGia_Combobox()
         {
-            List<LoaiDocGiaDTO> listLoaiDocGia = ldgBus.select();
+            List<LoaiDocGiaDTO> listLoaiDocGia = ldgBus.select("");
 
             if (listLoaiDocGia == null)
             {
@@ -48,7 +48,7 @@ namespace QLThuVien
             }
 
         }
-        private void loadData_Vao_GridView(List<DocGiaDTO> listDocGia){
+        private void loadData_Vao_GridView(List<DocGiaDTO> listDocGia) {
             if (listDocGia == null)
             {
                 MessageBox.Show("Có lỗi khi lấy Món ăn từ DB");
@@ -125,7 +125,7 @@ namespace QLThuVien
             myCurrencyManager.Refresh();
 
         }
-        private void loadData_Vao_GridView(string tag,int key)
+        private void loadData_Vao_GridView(string tag, int key)
         {
             listDocGia = new List<DocGiaDTO>();
             switch (key)
@@ -142,7 +142,7 @@ namespace QLThuVien
                     }
                 case DocGiaDAL.TimBangTen:
                     {
-                        listDocGia=dgBus.select(tag, key);
+                        listDocGia = dgBus.select(tag, key);
                         break;
                     }
             }
@@ -151,15 +151,22 @@ namespace QLThuVien
 
 
         }
-        private void getThongTinDocGia( string ma)
+        private void getThongTinDocGia(string ma)
         {
             DocGiaDTO dg = new DocGiaDTO();
-            
+
             Console.WriteLine(" Ma da chon: " + ma);
 
-            listDocGia = dgBus.select(ma, 0);
-            if (listDocGia==null) return;
-            dg = listDocGia[0];
+            //    listDocGia = dgBus.select(ma, 0);
+            if (listDocGia == null) return;
+            foreach (DocGiaDTO _dg in listDocGia)
+            {
+                if (_dg.Ma.IndexOf(ma) >= 0) {
+                    dg = _dg;
+                    break;
+                }
+            }
+
             if (dg == null)
             {
                 MessageBox.Show("Get thong tin DG tu db that bai");
@@ -169,22 +176,22 @@ namespace QLThuVien
                 textBox_HoVaTen.Text = dg.HovaTen;
                 textBox_DiaChi.Text = dg.DiaChi;
                 textBox_Email.Text = dg.Email;
-                textBox_HanSuDung.Text = dg.HanSuDung+"";
+                textBox_HanSuDung.Text = dg.HanSuDung + "";
                 dateTimePicker_NgaySinh.Value = dg.NgaySinh;
                 dateTimePicker_NgayLapThe.Value = dg.NgayLapThe;
 
-                for (int i=0;i< comboBox_LoaiDocGia.Items.Count; i++)
+                for (int i = 0; i < comboBox_LoaiDocGia.Items.Count; i++)
                 {
                     comboBox_LoaiDocGia.SelectedIndex = i;
                     Console.WriteLine("Ma combox: " + comboBox_LoaiDocGia.SelectedValue.ToString());
                     if (comboBox_LoaiDocGia.SelectedValue.ToString().IndexOf(dg.maLoaiDocGia) >= 0)
                     {
-                        
+
                         break;
                     }
                 }
-                
-       
+
+
             }
         }
 
@@ -217,7 +224,7 @@ namespace QLThuVien
 
         private void button4_Click(object sender, EventArgs e)
         {
-            loadData_Vao_GridView("",DocGiaDAL.TimToanBo);
+            loadData_Vao_GridView("", DocGiaDAL.TimToanBo);
         }
 
         private void dgv_QuanLyTheDocGia_MouseClick(object sender, MouseEventArgs e)
@@ -225,31 +232,43 @@ namespace QLThuVien
             int index = dgv_QuanLyTheDocGia.CurrentRow.Index;
             string MaDG = dgv_QuanLyTheDocGia.Rows[index].Cells[0].Value + "";
             textBox_Ma.Text = MaDG;
-            Console.WriteLine("R="+index+"   C=0  "+MaDG);
+            getThongTinDocGia(MaDG);
+            Console.WriteLine("R=" + index + "   C=0  " + MaDG);
         }
 
         private void textBox_Ma_TextChanged(object sender, EventArgs e)
         {
             getThongTinDocGia(textBox_Ma.Text);
         }
+        private String TaoMa(String Ma)
+        {
+            String s = "";
+            for (int i = 0; i < Ma.Length; i++) {
+                if ((Ma[i]>='0' & Ma[i]<='9')){
+                    s += Ma[i];
+                }
+            }
+            Console.WriteLine("Ma moi nhat: "+s);
+            int _s = int.Parse(s);
+            _s++;
+            String _ma = "" + _s;
+            while (_ma.Length < 5)
+            {
+                _ma = "0" + _ma;
+            }
+            _ma = "DG" + _ma;
+            return _ma;
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
              //1. Map data from GUI
             DocGiaDTO dg = new DocGiaDTO();
-
-            int SoLuongDocGia = dgv_QuanLyTheDocGia.RowCount+1;
-
-            string Ma = SoLuongDocGia+"";
-            while (Ma.Length < 5)
-            {
-                Ma = "0" + Ma;
-            }
-            Ma = "DG" + Ma;
+            String Ma = this.TaoMa(listDocGia[listDocGia.Count - 1].Ma);
 
             
-
-            DialogResult dlr = MessageBox.Show("Bạn có muốn thêm thẻ với mã "+Ma+" khổng?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+   
+            DialogResult dlr = MessageBox.Show("Bạn có muốn thêm thẻ với mã "+Ma+" không?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (dlr == DialogResult.Yes)
             {
                 dg.Ma = Ma;
