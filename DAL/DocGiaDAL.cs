@@ -12,7 +12,9 @@ namespace DAL
     public class DocGiaDAL
     {
         private string connectionString;
-
+        public const int TimToanBo = 0;
+        public const int TimBangMa = 1;
+        public const int TimBangTen = 2;
 
         public string ConnectionString
         {
@@ -153,16 +155,35 @@ namespace DAL
             return true;
         }
 
-        public List<DocGiaDTO> TimKiemBangTen(String ten)
+        public List<DocGiaDTO> select(String key,int Type)
         {
 
 
 
             Console.WriteLine("========================================================");
-            Console.WriteLine("Tim kiem doc gia bang ten: " + ten);
+            Console.WriteLine("Tim kiem doc gia bang: " + Type);
             string query = string.Empty;
-            query = "select * from[dbo].[tblTheDocGia]";
-            query += "WHERE [hoVaTenDocGia] =@hoVaTenDocGia";
+            string tag = "";
+            switch (Type)
+            {
+                case TimToanBo:
+                    query = "select * from[dbo].[tblTheDocGia],[dbo].[tblLoaiDocGia]";
+                    query += "WHERE [dbo].[tblTheDocGia].[maLoaiDocGia]=[dbo].[tblLoaiDocGia].[maLoaiDocGia]";
+
+                    break;
+                case TimBangMa:
+                    query = "select * from[dbo].[tblTheDocGia],[dbo].[tblLoaiDocGia]";
+                    query += "WHERE [dbo].[tblTheDocGia].[maLoaiDocGia]=[dbo].[tblLoaiDocGia].[maLoaiDocGia] and [maDocGia] =@maDocGia";
+                    tag = "@maDocGia";
+                    break;
+                case TimBangTen:
+                    query = "select * from[dbo].[tblTheDocGia],[dbo].[tblLoaiDocGia]";
+                    query += "WHERE [dbo].[tblTheDocGia].[maLoaiDocGia]=[dbo].[tblLoaiDocGia].[maLoaiDocGia] and [hoVaTenDocGia] =@hoVaTenDocGia";
+                    tag = "@hoVaTenDocGia";
+                    break;
+
+            }
+            
 
             List<DocGiaDTO> ListDocGia = new List<DocGiaDTO>();
 
@@ -174,7 +195,11 @@ namespace DAL
                     cmd.Connection = con;
                     cmd.CommandType = System.Data.CommandType.Text;
                     cmd.CommandText = query;
-                    cmd.Parameters.AddWithValue("@hoVaTenDocGia", ten);
+                    if (tag.Length > 0)
+                    {
+                        cmd.Parameters.AddWithValue(tag, key);
+                    }
+
 
                     try
                     {
@@ -197,7 +222,7 @@ namespace DAL
                                 DocGia.DiaChi = reader["diaChi"].ToString();
                                 DocGia.Email = reader["email"].ToString();
                                 DocGia.maLoaiDocGia = reader["maLoaiDocGia"].ToString();
-
+                                DocGia.TenLoaiDocGia = reader["tenLoaiDocGia"].ToString();
 
                                 DocGia.NgayLapThe = DateTime.Parse(reader["ngayLapThe"].ToString());
                                 DocGia.NgaySinh = DateTime.Parse(reader["ngaySinh"].ToString());
@@ -223,134 +248,5 @@ namespace DAL
 
         }
 
-
-        public DocGiaDTO get(String MaDG)
-        {
-
-
-            Console.WriteLine("========================================================");
-            Console.WriteLine("Load get Thong tin doc gia: " + MaDG);
-            string query = string.Empty;
-            query = "select * from[dbo].[tblTheDocGia]";
-            query += "WHERE [maDocGia] =@maDocGia";
-
-            DocGiaDTO DocGia = new DocGiaDTO();
-
-            using (SqlConnection con = new SqlConnection(ConnectionString))
-            {
-
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = con;
-                    cmd.CommandType = System.Data.CommandType.Text;
-                    cmd.CommandText = query;
-                    cmd.Parameters.AddWithValue("@maDocGia", MaDG);
-
-                    try
-                    {
-                        Console.WriteLine("Bat dau chay query");
-                        con.Open();
-                        SqlDataReader reader = null;
-                        reader = cmd.ExecuteReader();
-                        Console.WriteLine("Chay query thanh cong");
-                        if (reader.HasRows == true)
-                        {
-                            while (reader.Read())
-                            {
-
-                                DocGia.Ma = reader["maDocGia"].ToString();
-                                Console.WriteLine("Ma doc gia: " + DocGia.Ma);
-                                DocGia.HovaTen = reader["hoVaTenDocGia"].ToString();
-                                Console.WriteLine("Ten doc gia: " + DocGia.HovaTen);
-                                DocGia.HanSuDung = int.Parse(reader["hanSuDung"].ToString());
-                                DocGia.DiaChi = reader["diaChi"].ToString();
-                                DocGia.Email = reader["email"].ToString();
-                                DocGia.maLoaiDocGia = reader["maLoaiDocGia"].ToString();
-
-
-                                DocGia.NgayLapThe = DateTime.Parse(reader["ngayLapThe"].ToString());
-                                DocGia.NgaySinh = DateTime.Parse(reader["ngaySinh"].ToString());
-
-
-
-
-                            }
-                        }
-
-                        con.Close();
-                        con.Dispose();
-                    }
-                    catch (Exception ex)
-                    {
-                        con.Close();
-                        return null;
-                    }
-                }
-            }
-            Console.WriteLine("Get doc gia thanh cong");
-            return DocGia;
-        }
-
-        public List<DocGiaDTO> select()
-        {
-            Console.WriteLine("========================================================");
-            Console.WriteLine("Load doc gia");
-            string query = string.Empty;
-            query = "select * from[dbo].[tblTheDocGia],[dbo].[tblLoaiDocGia]";
-            query += "WHERE [dbo].[tblTheDocGia].[maLoaiDocGia]=[dbo].[tblLoaiDocGia].[maLoaiDocGia]";
-
-            List<DocGiaDTO> lsDocGia = new List<DocGiaDTO>();
-
-            using (SqlConnection con = new SqlConnection(ConnectionString))
-            {
-
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = con;
-                    cmd.CommandType = System.Data.CommandType.Text;
-                    cmd.CommandText = query;
-
-                    try
-                    {
-                        Console.WriteLine("Bat dau chay query");
-                        con.Open();
-                        SqlDataReader reader = null;
-                        reader = cmd.ExecuteReader();
-                        Console.WriteLine("Chay query thanh cong");
-                        if (reader.HasRows == true)
-                        {
-                            while (reader.Read())
-                            {
-                                DocGiaDTO dg = new DocGiaDTO();
-                                dg.Ma = reader["maDocGia"].ToString();
-                                Console.WriteLine("Ma doc gia: " + dg.Ma);
-
-                                dg.HovaTen = reader["hoVaTenDocGia"].ToString();
-
-                                dg.NgayLapThe = DateTime.Parse(reader["ngayLapThe"].ToString());
-                                dg.NgaySinh = DateTime.Parse(reader["ngaySinh"].ToString());
-                                dg.HanSuDung = int.Parse(reader["hanSuDung"].ToString());
-                                dg.DiaChi = reader["diaChi"].ToString();
-                                dg.Email = reader["email"].ToString();
-                                dg.maLoaiDocGia = reader["maLoaiDocGia"].ToString();
-                                dg.TenLoaiDocGia = reader["TenLoaiDocGia"].ToString();
-
-                                lsDocGia.Add(dg);
-                            }
-                        }
-
-                        con.Close();
-                        con.Dispose();
-                    }
-                    catch (Exception ex)
-                    {
-                        con.Close();
-                        return null;
-                    }
-                }
-            }
-            Console.WriteLine("Load loai doc gia thanh cong");
-            return lsDocGia;
-        }
     }
 }

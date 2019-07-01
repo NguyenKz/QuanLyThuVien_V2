@@ -32,18 +32,9 @@ namespace BUS
             bool re = dgDAL.sua(dg);
             return re;
         }
-
-        public List<DocGiaDTO> select()
+        public List<DocGiaDTO> select(string key,int Type)
         {
-            return dgDAL.select();
-        }
-        public List<DocGiaDTO> TimKiemBangTen(string Ten)
-        {
-            return dgDAL.TimKiemBangTen(Ten);
-        }
-        public DocGiaDTO get(String MaDG)
-        {
-            return dgDAL.get(MaDG);
+            return dgDAL.select(key,Type);
         }
     }
 }

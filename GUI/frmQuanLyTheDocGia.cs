@@ -1,5 +1,6 @@
 ﻿using BUS;
 using DTO;
+using DAL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,9 +17,7 @@ namespace QLThuVien
     {
         private DocGiaBUS dgBus;
         private LoaiDocGiaBUS ldgBus;
-        public const int TimBangMa= 1;
-        public const int TimBangTen = 2;
-        
+        List<DocGiaDTO> listDocGia;
         public frmQuanLyTheDocGia()
         {
             InitializeComponent();
@@ -42,38 +41,14 @@ namespace QLThuVien
             CurrencyManager myCurrencyManager = (CurrencyManager)this.BindingContext[comboBox_LoaiDocGia.DataSource];
             myCurrencyManager.Refresh();
 
-            DocGiaDTO dg = new DocGiaDTO();
-            dg = dgBus.get(textBox_Ma.Text);
 
             if (comboBox_LoaiDocGia.Items.Count > 0)
-            {                       
-                comboBox_LoaiDocGia.SelectedIndex = 0;               
+            {
+                comboBox_LoaiDocGia.SelectedIndex = 0;
             }
 
         }
-        private void loadData_Vao_GridView(int key)
-        {
-            List<DocGiaDTO> listDocGia = new List<DocGiaDTO>();
-            switch (key)
-            {
-                case 0:
-                    {
-                        listDocGia = dgBus.select();
-                        break;
-                    }
-                case TimBangMa:
-                    {
-                        listDocGia.Add(dgBus.get(this.textBox_TimKiem.Text)) ;
-                        break;
-                    }
-                case TimBangTen:
-                    {
-                        listDocGia=dgBus.TimKiemBangTen(this.textBox_TimKiem.Text);
-                        break;
-                    }
-            }
-
-
+        private void loadData_Vao_GridView(List<DocGiaDTO> listDocGia){
             if (listDocGia == null)
             {
                 MessageBox.Show("Có lỗi khi lấy Món ăn từ DB");
@@ -87,7 +62,7 @@ namespace QLThuVien
             dgv_QuanLyTheDocGia.AllowUserToAddRows = false;
             dgv_QuanLyTheDocGia.DataSource = listDocGia;
 
-            
+
 
 
             DataGridViewTextBoxColumn clMa = new DataGridViewTextBoxColumn();
@@ -118,7 +93,7 @@ namespace QLThuVien
             clDiaChi.DataPropertyName = "DiaChi";
             dgv_QuanLyTheDocGia.Columns.Add(clDiaChi);
 
-            DataGridViewTextBoxColumn clEmail= new DataGridViewTextBoxColumn();
+            DataGridViewTextBoxColumn clEmail = new DataGridViewTextBoxColumn();
             clEmail.Name = "email";
             clEmail.HeaderText = "Email";
             clEmail.DataPropertyName = "email";
@@ -126,7 +101,7 @@ namespace QLThuVien
 
 
             DataGridViewTextBoxColumn clTenLoaiDocGia = new DataGridViewTextBoxColumn();
-            clTenLoaiDocGia.Name = "TenLoaiDocGia";
+            clTenLoaiDocGia.Name = "maLoaiDocGia";
             clTenLoaiDocGia.HeaderText = "Loại độc giả";
             clTenLoaiDocGia.DataPropertyName = "TenLoaiDocGia";
             dgv_QuanLyTheDocGia.Columns.Add(clTenLoaiDocGia);
@@ -148,12 +123,43 @@ namespace QLThuVien
 
             CurrencyManager myCurrencyManager = (CurrencyManager)this.BindingContext[dgv_QuanLyTheDocGia.DataSource];
             myCurrencyManager.Refresh();
+
+        }
+        private void loadData_Vao_GridView(string tag,int key)
+        {
+            listDocGia = new List<DocGiaDTO>();
+            switch (key)
+            {
+                case DocGiaDAL.TimToanBo:
+                    {
+                        listDocGia = dgBus.select("", key);
+                        break;
+                    }
+                case DocGiaDAL.TimBangMa:
+                    {
+                        listDocGia = dgBus.select(tag, key);
+                        break;
+                    }
+                case DocGiaDAL.TimBangTen:
+                    {
+                        listDocGia=dgBus.select(tag, key);
+                        break;
+                    }
+            }
+            loadData_Vao_GridView(listDocGia);
+
+
+
         }
         private void getThongTinDocGia( string ma)
         {
             DocGiaDTO dg = new DocGiaDTO();
+            
             Console.WriteLine(" Ma da chon: " + ma);
-            dg = dgBus.get(ma);
+
+            listDocGia = dgBus.select(ma, 0);
+            if (listDocGia==null) return;
+            dg = listDocGia[0];
             if (dg == null)
             {
                 MessageBox.Show("Get thong tin DG tu db that bai");
@@ -185,9 +191,9 @@ namespace QLThuVien
 
         private void AddDataToCmbTimKiem()
         {
-            this.comboBox_TimKiem.Items.Insert(0, "bằng mã");
-            this.comboBox_TimKiem.Items.Insert(TimBangMa, "Tìm bằng mã");
-            this.comboBox_TimKiem.Items.Insert(TimBangTen, "Tìm bằng tên");
+            this.comboBox_TimKiem.Items.Insert(DocGiaDAL.TimToanBo, "Toàn bộ");
+            this.comboBox_TimKiem.Items.Insert(DocGiaDAL.TimBangMa, "Tìm bằng mã");
+            this.comboBox_TimKiem.Items.Insert(DocGiaDAL.TimBangTen, "Tìm bằng tên");
             this.comboBox_TimKiem.SelectedIndex = 0;
 
         }
@@ -199,7 +205,8 @@ namespace QLThuVien
 
             dgBus = new DocGiaBUS();
             ldgBus = new LoaiDocGiaBUS();
-            loadData_Vao_GridView(0);
+            listDocGia = new List<DocGiaDTO>();
+            loadData_Vao_GridView("", DocGiaDAL.TimToanBo);
             loadLoaiDocGia_Combobox();
             AddDataToCmbTimKiem();
 
@@ -210,7 +217,7 @@ namespace QLThuVien
 
         private void button4_Click(object sender, EventArgs e)
         {
-            loadData_Vao_GridView(0);
+            loadData_Vao_GridView("",DocGiaDAL.TimToanBo);
         }
 
         private void dgv_QuanLyTheDocGia_MouseClick(object sender, MouseEventArgs e)
@@ -253,9 +260,16 @@ namespace QLThuVien
                 dg.NgaySinh = dateTimePicker_NgaySinh.Value;
                 dg.DiaChi = textBox_DiaChi.Text;
                 dg.Email = textBox_Email.Text;
-                dg.HanSuDung = int.Parse(textBox_HanSuDung.Text);
+                
+                dg.HanSuDung = int.Parse("0"+textBox_HanSuDung.Text);
 
                 //2. Kiểm tra data hợp lệ or not
+                if (dg.HovaTen.Length*dg.maLoaiDocGia.Length*dg.DiaChi.Length*dg.Email.Length*dg.Ma.Length<=0||dg.HanSuDung<=0) {
+
+                    MessageBox.Show("Thêm thất bại, vui lòng kiểm tra lại thông tin.");
+                    return;
+                }
+                
 
                 //3. Thêm vào DB
                 bool kq = dgBus.them(dg);
@@ -264,7 +278,7 @@ namespace QLThuVien
                 else
                 {
                     MessageBox.Show("Thêm Độc giả thành công");
-                    loadData_Vao_GridView(0);
+                    loadData_Vao_GridView("", DocGiaDAL.TimToanBo);
                     dgv_QuanLyTheDocGia.FirstDisplayedScrollingRowIndex = dgv_QuanLyTheDocGia.RowCount-1;
 
                 }
@@ -296,10 +310,15 @@ namespace QLThuVien
                 dg.NgaySinh = dateTimePicker_NgaySinh.Value;
                 dg.DiaChi = textBox_DiaChi.Text;
                 dg.Email = textBox_Email.Text;
-                dg.HanSuDung = int.Parse(textBox_HanSuDung.Text);
+                dg.HanSuDung = int.Parse("0" + textBox_HanSuDung.Text);
 
                 //2. Kiểm tra data hợp lệ or not
+                if (dg.HovaTen.Length * dg.maLoaiDocGia.Length * dg.DiaChi.Length * dg.Email.Length * dg.Ma.Length <= 0 || dg.HanSuDung <= 0)
+                {
 
+                    MessageBox.Show("Cập nhật thất bại, vui lòng kiểm tra lại thông tin.");
+                    return;
+                }
                 //3. Thêm vào DB
                 bool kq = dgBus.sua(dg);
                 if (kq == false)
@@ -308,7 +327,7 @@ namespace QLThuVien
                 {
                     MessageBox.Show("Sửa thông tin Độc giả thành công");
                     int tempIndex = dgv_QuanLyTheDocGia.CurrentRow.Index;
-                    loadData_Vao_GridView(0);
+                    loadData_Vao_GridView("", DocGiaDAL.TimToanBo);
                     dgv_QuanLyTheDocGia.FirstDisplayedScrollingRowIndex = tempIndex;
 
 
@@ -340,7 +359,7 @@ namespace QLThuVien
                 else { 
                     MessageBox.Show("Xóa Độc giả thành công");
                     int tempIndex = dgv_QuanLyTheDocGia.CurrentRow.Index-1;
-                    loadData_Vao_GridView(0);
+                    loadData_Vao_GridView("", DocGiaDAL.TimToanBo);
                     dgv_QuanLyTheDocGia.FirstDisplayedScrollingRowIndex = tempIndex;
                 }
             }
@@ -349,21 +368,73 @@ namespace QLThuVien
                 MessageBox.Show("Không xóa.");
             }
         }
-
+        public static string RemoveUnicode(string text)
+        {
+            string[] arr1 = new string[] { "á", "à", "ả", "ã", "ạ", "â", "ấ", "ầ", "ẩ", "ẫ", "ậ", "ă", "ắ", "ằ", "ẳ", "ẵ", "ặ",
+            "đ",
+            "é","è","ẻ","ẽ","ẹ","ê","ế","ề","ể","ễ","ệ",
+            "í","ì","ỉ","ĩ","ị",
+            "ó","ò","ỏ","õ","ọ","ô","ố","ồ","ổ","ỗ","ộ","ơ","ớ","ờ","ở","ỡ","ợ",
+            "ú","ù","ủ","ũ","ụ","ư","ứ","ừ","ử","ữ","ự",
+            "ý","ỳ","ỷ","ỹ","ỵ",};
+                    string[] arr2 = new string[] { "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",
+            "d",
+            "e","e","e","e","e","e","e","e","e","e","e",
+            "i","i","i","i","i",
+            "o","o","o","o","o","o","o","o","o","o","o","o","o","o","o","o","o",
+            "u","u","u","u","u","u","u","u","u","u","u",
+            "y","y","y","y","y",};
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                text = text.Replace(arr1[i], arr2[i]);
+                text = text.Replace(arr1[i].ToUpper(), arr2[i].ToUpper());
+            }
+            return text;
+        }
         private void button5_Click(object sender, EventArgs e)
         {
             int key = this.comboBox_TimKiem.SelectedIndex;
-            switch (key)
-            {
-                case TimBangMa:
+            switch (key) {
+                case DocGiaDAL.TimToanBo: {
+                        loadData_Vao_GridView(listDocGia);
+                        break;
+                    }
+                case DocGiaDAL.TimBangMa: {
+                        List<DocGiaDTO> ls = new List<DocGiaDTO>();
+                        foreach (DocGiaDTO dg in listDocGia)
+                        {
+                            String key1 = RemoveUnicode(dg.Ma);
+                            key1 = key1.ToUpper();
+                            String key2 = RemoveUnicode(textBox_TimKiem.Text);
+                            key2 = key2.ToUpper();
+                            if (key1.IndexOf(key2) >= 0)
+                            {
+                                ls.Add(dg);
+                            }
+                        }
+                        loadData_Vao_GridView(ls);
+                        break;
+                    }
+                case DocGiaDAL.TimBangTen:
                     {
-                        loadData_Vao_GridView(TimBangMa);
+                        List<DocGiaDTO> ls = new List<DocGiaDTO>();
+                        foreach (DocGiaDTO dg in listDocGia)
+                        {
+                            String key1 = RemoveUnicode(dg.HovaTen);
+                            key1 = key1.ToUpper();
+                            String key2 = RemoveUnicode(textBox_TimKiem.Text);
+                            key2 = key2.ToUpper();
+                            if (key1.IndexOf(key2) >= 0)
+                            {
+                                ls.Add(dg);
+                            }
+                        }
+                        loadData_Vao_GridView(ls);
 
                         break;
                     }
-
-
             }
+            
         }
     }
 }
