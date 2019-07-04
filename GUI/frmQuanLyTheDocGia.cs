@@ -51,7 +51,7 @@ namespace QLThuVien
         private void loadData_Vao_GridView(List<DocGiaDTO> listDocGia) {
             if (listDocGia == null)
             {
-                MessageBox.Show("Có lỗi khi lấy Món ăn từ DB");
+                MessageBox.Show("Có lỗi khi lấy dữ liệu từ DB");
                 return;
             }
 
@@ -454,6 +454,28 @@ namespace QLThuVien
                     }
             }
             
+        }
+
+        private void comboBox_LoaiDocGia_TextChanged(object sender, EventArgs e)
+        {
+           // this.comboBox_LoaiDocGia.
+           /* String temp = this.comboBox_LoaiDocGia.Text;
+           // this.comboBox_LoaiDocGia.Text = "";
+            for (int i = 0; i < this.comboBox_LoaiDocGia.Items.Count; i++) {
+                Console.WriteLine(((LoaiDocGiaDTO)this.comboBox_LoaiDocGia.Items[i]).TenLoaiDocGia);
+                if (((LoaiDocGiaDTO)this.comboBox_LoaiDocGia.Items[i]).TenLoaiDocGia.IndexOf(temp)==0) {
+                    this.comboBox_LoaiDocGia.SelectedIndex = i;
+                    this.comboBox_LoaiDocGia.Text = ((LoaiDocGiaDTO)this.comboBox_LoaiDocGia.Items[i]).TenLoaiDocGia;
+
+                    break;
+                }
+            }
+            */
+        }
+
+        private void comboBox_LoaiDocGia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

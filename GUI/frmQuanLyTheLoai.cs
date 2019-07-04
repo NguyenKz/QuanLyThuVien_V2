@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BUS;
+using DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,32 +9,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DTO;
-using BUS;
-namespace QLThuVien
+
+namespace GUI
 {
-    /// <summary>
-    /// adfasdf
-    /// </summary>
-    public partial class frmQuanLyLoaiDocGia : Form
+    public partial class frmQuanLyTheLoai : Form
     {
-        public frmQuanLyLoaiDocGia()
+        public frmQuanLyTheLoai()
         {
             InitializeComponent();
         }
-        
-        private LoaiDocGiaBUS ldgBus;
-        private void loadData_Vao_GridView()
+        private TheLoaiBUS tlBUS;
+        private void frmQuanLyTheLoai_Load(object sender, EventArgs e)
         {
-            List<LoaiDocGiaDTO> listTheLoai = ldgBus.select("");
+             tlBUS = new TheLoaiBUS();
+             loadData_Vao_GridView();
+        }
+        void loadData_Vao_GridView() {
+            List<TheLoaiDTO> listTheLoai = tlBUS.select("");
 
             if (listTheLoai == null)
             {
-                MessageBox.Show("Có lỗi khi lấy dữ liệu từ DB");
+                MessageBox.Show("Có lỗi khi lấy data từ DB");
                 return;
             }
 
-            
+
 
             dvg_QuanLyLoaiDocGia.Columns.Clear();
             dvg_QuanLyLoaiDocGia.DataSource = null;
@@ -40,97 +41,82 @@ namespace QLThuVien
             dvg_QuanLyLoaiDocGia.AutoGenerateColumns = false;
             dvg_QuanLyLoaiDocGia.AllowUserToAddRows = false;
             dvg_QuanLyLoaiDocGia.DataSource = listTheLoai;
-            
+
             DataGridViewTextBoxColumn clMa = new DataGridViewTextBoxColumn();
-            clMa.Name = "MaLoaiDocGia";
-            clMa.HeaderText = "Mã loại độc giả";
-            clMa.DataPropertyName = "MaLoaiDocGia";
+            clMa.Name = "MaTheLoai";
+            clMa.HeaderText = "Mã thể loại";
+            clMa.DataPropertyName = "MaTheLoai";
             dvg_QuanLyLoaiDocGia.Columns.Add(clMa);
 
             DataGridViewTextBoxColumn clTen = new DataGridViewTextBoxColumn();
-            clTen.Name = "TenLoaiDocGia";
-            clTen.HeaderText = "Tên loại độc giả";
-            clTen.DataPropertyName = "TenLoaiDocGia";
+            clTen.Name = "TenTheLoai";
+            clTen.HeaderText = "Tên thể loại";
+            clTen.DataPropertyName = "TenTheLoai";
             dvg_QuanLyLoaiDocGia.Columns.Add(clTen);
 
-           
+
 
             CurrencyManager myCurrencyManager = (CurrencyManager)this.BindingContext[dvg_QuanLyLoaiDocGia.DataSource];
             myCurrencyManager.Refresh();
-        }
-        private void bnt_Load_Click(object sender, EventArgs e)
-        {
-            loadData_Vao_GridView();
-       
-        }
-      
-
-        private void frmQuanLyLoaiDocGia_Load(object sender, EventArgs e)
-        {
-            
-            ldgBus = new LoaiDocGiaBUS();
-          
-            loadData_Vao_GridView();
 
         }
 
+        private void getThongTinMa(String ma) {
 
-        private void dvg_QuanLyLoaiDocGia_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void getThongTinMa(string ma)
-        {
-            LoaiDocGiaDTO dg = new LoaiDocGiaDTO();
+            TheLoaiDTO tl = new TheLoaiDTO();
 
             Console.WriteLine(" Ma da chon: " + ma);
 
-            List<LoaiDocGiaDTO> listDocGia = ldgBus.select(ma);
-            if (listDocGia == null) return;
+            List<TheLoaiDTO> listTheLoai = tlBUS.select(ma);
+            if (listTheLoai == null) return;
             Console.WriteLine(" Get thong tin thanh cong.");
-            dg = listDocGia[0];
-            if (dg == null)
+            tl = listTheLoai[0];
+            if (tl == null)
             {
                 MessageBox.Show("Get thong tin DG tu db that bai");
             }
             else
             {
-                this.textBox_TenLoaiDocGia.Text = dg.TenLoaiDocGia;
+                this.textBox_TenLoaiDocGia.Text = tl.TenTheLoai;
+                this.textBox_Ma.Text = tl.MaTheLoai;
 
             }
         }
+
+        private void bnt_Load_Click(object sender, EventArgs e)
+        {
+            loadData_Vao_GridView();
+
+
+        }
+
 
         private void dvg_QuanLyLoaiDocGia_MouseClick(object sender, MouseEventArgs e)
         {
             int index = this.dvg_QuanLyLoaiDocGia.CurrentRow.Index;
             string MaDG = dvg_QuanLyLoaiDocGia.Rows[index].Cells[0].Value + "";
-            this.textBox_Ma.Text = MaDG;
             getThongTinMa(MaDG);
-
-
         }
 
         private void button_Xoa_Click(object sender, EventArgs e)
         {
-
             //1. Map data from GUI
-            LoaiDocGiaDTO ldg = new LoaiDocGiaDTO();
-            ldg.MaLoaiDocGia = this.textBox_Ma.Text;
-            
-            DialogResult dlr = MessageBox.Show("Bạn có muốn xoa loai voi ma  " + ldg.MaLoaiDocGia + " khổng?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            TheLoaiDTO temp = new TheLoaiDTO();
+            temp.MaTheLoai = this.textBox_Ma.Text;
+
+            DialogResult dlr = MessageBox.Show("Bạn có muốn xóa thể loại với mã  " + temp.MaTheLoai + " khổng?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (dlr == DialogResult.Yes)
             {
 
                 //2. Kiểm tra data hợp lệ or not
 
                 //3. Thêm vào DB
-                bool kq = ldgBus.xoa(ldg);
+                bool kq = tlBUS.xoa(temp);
                 if (kq == false)
-                    MessageBox.Show("Xóa loai độc giả thất bại. Vui lòng kiểm tra lại dũ liệu");
+                    MessageBox.Show("Xóa thể loai thất bại. Vui lòng kiểm tra lại dũ liệu");
                 else
                 {
-                    MessageBox.Show("Xóa loai độc giả thành công");
+                    MessageBox.Show("Xóa thể loai thành công");
                     loadData_Vao_GridView();
                     this.dvg_QuanLyLoaiDocGia.FirstDisplayedScrollingRowIndex = 0;
                 }
@@ -158,29 +144,29 @@ namespace QLThuVien
             {
                 _ma = "0" + _ma;
             }
-            _ma = "Loai" + _ma;
+            _ma = "ThLo" + _ma;
             return _ma;
         }
         private void button_Them_Click(object sender, EventArgs e)
         {
             //1. Map data from GUI
-            LoaiDocGiaDTO ldg = new LoaiDocGiaDTO();
-            List<LoaiDocGiaDTO> listldg = new List<LoaiDocGiaDTO>();
-            listldg = ldgBus.select("");
-            String Ma = this.TaoMa(listldg[listldg.Count - 1].MaLoaiDocGia);
+            TheLoaiDTO temp = new TheLoaiDTO();
+            List<TheLoaiDTO> listtl = new List<TheLoaiDTO>();
+            listtl = tlBUS.select("");
+            String Ma = this.TaoMa(listtl[listtl.Count - 1].MaTheLoai);
+            
 
 
-
-            DialogResult dlr = MessageBox.Show("Bạn có muốn thêm thẻ với mã " + Ma + " không?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            DialogResult dlr = MessageBox.Show("Bạn có muốn thêm thể loại với mã " + Ma + " không?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (dlr == DialogResult.Yes)
             {
-                ldg.MaLoaiDocGia = Ma;
+                temp.MaTheLoai = Ma;
 
-                ldg.TenLoaiDocGia = this.textBox_TenLoaiDocGia.Text;
-               
-              
+                temp.TenTheLoai = this.textBox_TenLoaiDocGia.Text;
+
+
                 //2. Kiểm tra data hợp lệ or not
-                if (ldg.TenLoaiDocGia.Length<=0)
+                if (temp.MaTheLoai.Length <= 0)
                 {
 
                     MessageBox.Show("Thêm thất bại, vui lòng kiểm tra lại thông tin.");
@@ -189,14 +175,14 @@ namespace QLThuVien
 
 
                 //3. Thêm vào DB
-                bool kq = ldgBus.them(ldg);
+                bool kq = tlBUS.them(temp);
                 if (kq == false)
-                    MessageBox.Show("Thêm Độc giả thất bại. Vui lòng kiểm tra lại dũ liệu");
+                    MessageBox.Show("Thêm thất bại. Vui lòng kiểm tra lại dũ liệu");
                 else
                 {
-                    MessageBox.Show("Thêm Độc giả thành công");
+                    MessageBox.Show("Thêm thành công");
                     this.loadData_Vao_GridView();
-                   
+
 
                 }
             }
@@ -204,24 +190,23 @@ namespace QLThuVien
                 MessageBox.Show("Không thêm.");
 
 
-
         }
 
         private void button_Sua_Click(object sender, EventArgs e)
         {
             //1. Map data from GUI
-            LoaiDocGiaDTO ldg = new LoaiDocGiaDTO();
-            ldg.MaLoaiDocGia = this.textBox_Ma.Text;
-            ldg.TenLoaiDocGia = this.textBox_TenLoaiDocGia.Text;
+            TheLoaiDTO tl = new TheLoaiDTO();
+            tl.MaTheLoai = this.textBox_Ma.Text;
+            tl.TenTheLoai = this.textBox_TenLoaiDocGia.Text;
 
 
-            DialogResult dlr = MessageBox.Show("Bạn có muốn sửa thẻ với mã " + ldg.MaLoaiDocGia + " không?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            DialogResult dlr = MessageBox.Show("Bạn có muốn sửa thể loại với mã " + tl.MaTheLoai + " không?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (dlr == DialogResult.Yes)
             {
 
 
                 //2. Kiểm tra data hợp lệ or not
-                if (ldg.TenLoaiDocGia.Length <= 0)
+                if (tl.TenTheLoai.Length <= 0)
                 {
 
                     MessageBox.Show("Sửa thất bại, vui lòng kiểm tra lại thông tin.");
@@ -230,12 +215,12 @@ namespace QLThuVien
 
 
                 //3. Thêm vào DB
-                bool kq = ldgBus.sua(ldg);
+                bool kq = tlBUS.sua(tl);
                 if (kq == false)
-                    MessageBox.Show("Sửa Độc giả thất bại. Vui lòng kiểm tra lại dũ liệu");
+                    MessageBox.Show("Sửa thất bại. Vui lòng kiểm tra lại dũ liệu");
                 else
                 {
-                    MessageBox.Show("Sửa Độc giả thành công");
+                    MessageBox.Show("Sửa thành công");
                     this.loadData_Vao_GridView();
                 }
             }

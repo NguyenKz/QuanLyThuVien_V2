@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GUI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -54,6 +55,21 @@ namespace QLThuVien
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void quảnLýThểLoạiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmQuanLySach frm = new frmQuanLySach();
+            frm.Show();
+            //frm.MdiParent = this;
+            //frm.Show();
+        }
+
+        private void quảnLýThểLoạiToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmQuanLyTheLoai frm = new frmQuanLyTheLoai();
+            frm.Show();
 
         }
     }

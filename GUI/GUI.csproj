@@ -61,11 +61,23 @@
     <Compile Include="frmQuanLyLoaiDocGia.designer.cs">
       <DependentUpon>frmQuanLyLoaiDocGia.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmQuanLySach.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmQuanLySach.Designer.cs">
+      <DependentUpon>frmQuanLySach.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmQuanLyTheDocGia.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmQuanLyTheDocGia.designer.cs">
       <DependentUpon>frmQuanLyTheDocGia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmQuanLyTheLoai.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmQuanLyTheLoai.Designer.cs">
+      <DependentUpon>frmQuanLyTheLoai.cs</DependentUpon>
     </Compile>
     <Compile Include="frmThemTheDocGia.cs">
       <SubType>Form</SubType>
@@ -87,8 +99,14 @@
     <EmbeddedResource Include="frmQuanLyLoaiDocGia.resx">
       <DependentUpon>frmQuanLyLoaiDocGia.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmQuanLySach.resx">
+      <DependentUpon>frmQuanLySach.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmQuanLyTheDocGia.resx">
       <DependentUpon>frmQuanLyTheDocGia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmQuanLyTheLoai.resx">
+      <DependentUpon>frmQuanLyTheLoai.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmThemTheDocGia.resx">
       <DependentUpon>frmThemTheDocGia.cs</DependentUpon>

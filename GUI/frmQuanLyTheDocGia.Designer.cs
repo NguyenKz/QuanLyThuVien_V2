@@ -271,11 +271,15 @@
             // 
             // comboBox_LoaiDocGia
             // 
+            this.comboBox_LoaiDocGia.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.comboBox_LoaiDocGia.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBox_LoaiDocGia.FormattingEnabled = true;
             this.comboBox_LoaiDocGia.Location = new System.Drawing.Point(75, 0);
             this.comboBox_LoaiDocGia.Name = "comboBox_LoaiDocGia";
             this.comboBox_LoaiDocGia.Size = new System.Drawing.Size(291, 21);
             this.comboBox_LoaiDocGia.TabIndex = 1;
+            this.comboBox_LoaiDocGia.SelectedIndexChanged += new System.EventHandler(this.comboBox_LoaiDocGia_SelectedIndexChanged);
+            this.comboBox_LoaiDocGia.TextChanged += new System.EventHandler(this.comboBox_LoaiDocGia_TextChanged);
             // 
             // label6
             // 
