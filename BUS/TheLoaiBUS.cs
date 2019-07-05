@@ -9,7 +9,7 @@ namespace BUS
     public class TheLoaiBUS
         {
         private TheLoaiDAL tlDAL;
-        public String cmd_String;
+      
         public TheLoaiBUS()
         {
             tlDAL = new TheLoaiDAL();

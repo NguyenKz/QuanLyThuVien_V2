@@ -282,6 +282,13 @@ namespace QLThuVien
                 
                 dg.HanSuDung = int.Parse("0"+textBox_HanSuDung.Text);
 
+                if ((DateTime.Now.Subtract( dg.NgaySinh).TotalDays/365)<18|| (DateTime.Now.Subtract(dg.NgaySinh).TotalDays / 365) > 55)
+                {
+                    MessageBox.Show("Thêm thất bại, tuổi độc giả phải từ 18 đến 55.");
+                    return;
+                }
+
+
                 //2. Kiểm tra data hợp lệ or not
                 if (dg.HovaTen.Length*dg.maLoaiDocGia.Length*dg.DiaChi.Length*dg.Email.Length*dg.Ma.Length<=0||dg.HanSuDung<=0) {
 
@@ -330,7 +337,11 @@ namespace QLThuVien
                 dg.DiaChi = textBox_DiaChi.Text;
                 dg.Email = textBox_Email.Text;
                 dg.HanSuDung = int.Parse("0" + textBox_HanSuDung.Text);
-
+                if ((DateTime.Now.Subtract(dg.NgaySinh).TotalDays / 365) < 18 || (DateTime.Now.Subtract(dg.NgaySinh).TotalDays / 365) > 55)
+                {
+                    MessageBox.Show("Sửa thất bại, tuổi độc giả phải từ 18 đến 55.");
+                    return;
+                }
                 //2. Kiểm tra data hợp lệ or not
                 if (dg.HovaTen.Length * dg.maLoaiDocGia.Length * dg.DiaChi.Length * dg.Email.Length * dg.Ma.Length <= 0 || dg.HanSuDung <= 0)
                 {
@@ -365,7 +376,7 @@ namespace QLThuVien
 
 
             dg.Ma = this.textBox_Ma.Text;
-            DialogResult dlr = MessageBox.Show("Bạn có muốn xoa thẻ với mã " + dg.Ma + " khổng?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            DialogResult dlr = MessageBox.Show("Khi xóa thẻ đọc giả thì các dữ liệu liên quan cũng sẽ bị xóa.\nBạn có muốn xoa thẻ với mã " + dg.Ma + " khổng?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (dlr == DialogResult.Yes)
             {
 

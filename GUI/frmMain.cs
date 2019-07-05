@@ -72,5 +72,11 @@ namespace QLThuVien
             frm.Show();
 
         }
+
+        private void quảnLýMượnTrảSáchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmMuonTraSach frm = new frmMuonTraSach();
+            frm.Show();
+        }
     }
 }
