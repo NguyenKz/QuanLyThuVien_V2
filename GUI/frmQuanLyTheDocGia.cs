@@ -220,7 +220,9 @@ namespace QLThuVien
             ldgBus = new LoaiDocGiaBUS();
             listDocGia = new List<DocGiaDTO>();
             loadData_Vao_GridView("", DocGiaDAL.TimToanBo);
-            
+            qdBUS = new QuyDinhBUS();
+            listQD = new List<QuyDinhDTO>();
+            listQD = qdBUS.select();
             loadLoaiDocGia_Combobox();
             AddDataToCmbTimKiem();
 

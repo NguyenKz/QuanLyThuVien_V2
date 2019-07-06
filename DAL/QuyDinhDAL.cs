@@ -30,7 +30,7 @@ namespace DAL
 
             string query = string.Empty;
             query += "UPDATE [dbo].[tblQuyDinh]  SET ";
-            query += "[maQuyDinh] = @maQuyDinh,";
+            
             query += "[doTuoiToiThieu]=@doTuoiToiThieu,";
             query += "[doTuoiToiDa]=@doTuoiToiDa,";
             query += "[khoangCachNamXuatBan]=@khoangCachNamXuatBan,";
@@ -47,7 +47,7 @@ namespace DAL
                     cmd.Connection = con;
                     cmd.CommandType = System.Data.CommandType.Text;
                     cmd.CommandText = query;
-                    cmd.Parameters.AddWithValue("@maQuyDinh", temp.MaQD);
+                   
                     cmd.Parameters.AddWithValue("@doTuoiToiThieu", temp.TuoiToiThieu);
                     //      cmd.Parameters.AddWithValue("@ngayNhap", temp.NgayNhap.Year + "-" + temp.NgayNhap.Month + "-" + temp.NgayNhap.Day);
                     cmd.Parameters.AddWithValue("@doTuoiToiDa", temp.TuoiToiDa);

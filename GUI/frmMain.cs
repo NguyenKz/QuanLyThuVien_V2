@@ -48,9 +48,6 @@ namespace QLThuVien
 
         private void quanLýThẻĐộcGiảToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmQuanLyTheDocGia frm = new frmQuanLyTheDocGia();
-            //frm.MdiParent = this;
-            frm.Show();
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -60,8 +57,8 @@ namespace QLThuVien
 
         private void quảnLýThểLoạiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmQuanLySach frm = new frmQuanLySach();
-            frm.Show();
+            //frmQuanLySach frm = new frmQuanLySach();
+            //frm.Show();
             //frm.MdiParent = this;
             //frm.Show();
         }
@@ -75,8 +72,8 @@ namespace QLThuVien
 
         private void quảnLýMượnTrảSáchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmMuonTraSach frm = new frmMuonTraSach();
-            frm.Show();
+            //frmMuonTraSach frm = new frmMuonTraSach();
+            //frm.Show();
         }
 
         private void quảnLýQuyĐịnhToolStripMenuItem_Click(object sender, EventArgs e)
@@ -84,6 +81,47 @@ namespace QLThuVien
             frmQuyDinh frm = new frmQuyDinh();
             frm.Show();
 
+        }
+
+        private void quảnLýThẻĐộcGiảToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmQuanLyTheDocGia frm = new frmQuanLyTheDocGia();
+            //frm.MdiParent = this;
+            frm.Show();
+        }
+
+        private void quảnLýLoạiĐộcGiảToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmQuanLyLoaiDocGia frm = new frmQuanLyLoaiDocGia();
+            //frm.MdiParent = this;
+            frm.Show();
+        }
+
+        private void quảnLýSáchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmQuanLySach frm = new frmQuanLySach();
+            frm.Show();
+
+        }
+
+        private void quảnLýLoạiSáchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmQuanLyTheLoai frm = new frmQuanLyTheLoai();
+            frm.Show();
+
+        }
+
+        private void quảnLýMượnTrảSáchToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            frmMuonTraSach frm = new frmMuonTraSach();
+            frm.Show();
+
+        }
+
+        private void báoCáoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmBaoCao frm = new frmBaoCao();
+            frm.Show();
         }
     }
 }

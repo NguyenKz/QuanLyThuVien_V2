@@ -54,7 +54,7 @@ namespace GUI
                 temp.KhoangCachNamXuatBan= Convert.ToInt32(this.numericUpDown_NamXuatBan.Value);
                 bool kq = qdBUS.sua(temp);
                 if (kq == false)
-                    MessageBox.Show("Sửa dữ quy định thất bại.");
+                    MessageBox.Show("Sửa quy định thất bại.");
                 else
                 {
                     listQD = qdBUS.select();
