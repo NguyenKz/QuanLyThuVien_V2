@@ -101,7 +101,7 @@ CREATE TABLE [dbo].[tblSach](
 	GO
 	INSERT INTO[dbo].[tblQuyDinh]([maQuyDinh],[doTuoiToiThieu],[doTuoiToiDa],[khoangCachNamXuatBan],[soSachMuonToiDa],[soNgayMuonToiDa] ) VALUES('QD00001',18,	55,8,5,4)
 	GO
-	select * from tblQuyDinh
+		
 INSERT INTO[dbo].[tblSach]([maSach],[TenSach],[ngayNhap],[tacGia],[nhaXuatBan],[maTheLoai],[namXuatBan],[triGia]) VALUES('SA00001',N'Nhập môn công nghệ phần mềm','1998-03-19',N'Trần Thảo Nguyên','A20_P315','ThLo002','2019-1-1',15000)
 go
 INSERT INTO[dbo].[tblSach]([maSach],[TenSach],[ngayNhap],[tacGia],[nhaXuatBan],[maTheLoai],[namXuatBan],[triGia]) VALUES('SA00002',N'Pham nhân tu tiên','1998-03-19',N'Trần Thảo Nguyên','A20_P315','ThLo002','2019-1-1',15000)
