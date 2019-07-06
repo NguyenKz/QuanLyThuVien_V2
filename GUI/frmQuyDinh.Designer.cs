@@ -41,6 +41,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_NgayMuonToiDa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_SachMuonToiDa)).BeginInit();
@@ -51,6 +52,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.numericUpDown_NgayMuonToiDa);
             this.panel1.Controls.Add(this.numericUpDown_SachMuonToiDa);
             this.panel1.Controls.Add(this.numericUpDown_NamXuatBan);
@@ -192,6 +194,16 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Độ tổi tối đa:";
             // 
+            // button2
+            // 
+            this.button2.BackgroundImage = global::GUI.Properties.Resources.ktmt;
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button2.Location = new System.Drawing.Point(3, 0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 50);
+            this.button2.TabIndex = 2;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // frmQuyDinh
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -227,5 +239,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDown_NamXuatBan;
         private System.Windows.Forms.NumericUpDown numericUpDown_TuoiToiDa;
         private System.Windows.Forms.NumericUpDown numericUpDown_TuoiToiThieu;
+        private System.Windows.Forms.Button button2;
     }
 }

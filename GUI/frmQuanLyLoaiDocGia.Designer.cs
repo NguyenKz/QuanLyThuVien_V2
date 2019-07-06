@@ -43,6 +43,7 @@
             this.button_Sua = new System.Windows.Forms.Button();
             this.button_Them = new System.Windows.Forms.Button();
             this.button_Xoa = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dvg_QuanLyLoaiDocGia)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -88,6 +89,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.panel4);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -209,6 +211,16 @@
             this.button_Xoa.UseVisualStyleBackColor = true;
             this.button_Xoa.Click += new System.EventHandler(this.button_Xoa_Click);
             // 
+            // button2
+            // 
+            this.button2.BackgroundImage = global::GUI.Properties.Resources.ktmt;
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button2.Location = new System.Drawing.Point(-3, -3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(34, 25);
+            this.button2.TabIndex = 3;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // frmQuanLyLoaiDocGia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -250,5 +262,6 @@
         private System.Windows.Forms.Button button_Sua;
         private System.Windows.Forms.Button button_Them;
         private System.Windows.Forms.Button button_Xoa;
+        private System.Windows.Forms.Button button2;
     }
 }

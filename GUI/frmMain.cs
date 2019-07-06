@@ -123,5 +123,20 @@ namespace QLThuVien
             frmBaoCao frm = new frmBaoCao();
             frm.Show();
         }
+
+        private void versionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Quản lý thư viện V1.0");
+        }
+
+        private void thoátỨngDụngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void thốngTinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Đồ án môn công nghệ phần mềm.\n Đề tài: Quản lý thư viện bằng công nghệ thông tin.\n Thành viên:\n1: Trần Thảo Nguyên\n2:Phạm Kim Thành.\n3:Trương Văn Việt.\n4:Vũ Nhân Nghĩa.");
+        }
     }
 }

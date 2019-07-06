@@ -73,7 +73,9 @@
             this.comboBox_PhuongThucTimKiem = new System.Windows.Forms.ComboBox();
             this.textBox_NoiDungTimKiem = new System.Windows.Forms.TextBox();
             this.dataGridView_DanhSachSach = new System.Windows.Forms.DataGridView();
+            this.button2 = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
             this.flowLayoutPanel5.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -103,6 +105,7 @@
             // 
             // flowLayoutPanel3
             // 
+            this.flowLayoutPanel3.Controls.Add(this.button2);
             this.flowLayoutPanel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.flowLayoutPanel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
@@ -539,6 +542,16 @@
             this.dataGridView_DanhSachSach.TabIndex = 1;
             this.dataGridView_DanhSachSach.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView_DanhSachSach_MouseClick);
             // 
+            // button2
+            // 
+            this.button2.BackgroundImage = global::GUI.Properties.Resources.ktmt;
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button2.Location = new System.Drawing.Point(3, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 50);
+            this.button2.TabIndex = 0;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // frmQuanLySach
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -552,6 +565,7 @@
             this.Text = "Quản lý sách";
             this.Load += new System.EventHandler(this.frmQuanLySach_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel5.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -627,5 +641,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button2;
     }
 }

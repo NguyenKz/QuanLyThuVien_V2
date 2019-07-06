@@ -42,6 +42,7 @@
             this.button_Sua = new System.Windows.Forms.Button();
             this.button_Them = new System.Windows.Forms.Button();
             this.button_Xoa = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dvg_QuanLyLoaiDocGia)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -207,12 +208,23 @@
             this.button_Xoa.UseVisualStyleBackColor = true;
             this.button_Xoa.Click += new System.EventHandler(this.button_Xoa_Click);
             // 
+            // button2
+            // 
+            this.button2.BackgroundImage = global::GUI.Properties.Resources.ktmt;
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button2.Location = new System.Drawing.Point(12, 12);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(30, 24);
+            this.button2.TabIndex = 5;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // frmQuanLyTheLoai
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.ClientSize = new System.Drawing.Size(469, 308);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.dvg_QuanLyLoaiDocGia);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "frmQuanLyTheLoai";
@@ -246,5 +258,6 @@
         private System.Windows.Forms.Button button_Sua;
         private System.Windows.Forms.Button button_Them;
         private System.Windows.Forms.Button button_Xoa;
+        private System.Windows.Forms.Button button2;
     }
 }

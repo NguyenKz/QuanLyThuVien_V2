@@ -70,6 +70,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.dgv_QuanLyTheDocGia = new System.Windows.Forms.DataGridView();
+            this.button6 = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel6.SuspendLayout();
@@ -515,12 +516,23 @@
             this.dgv_QuanLyTheDocGia.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_QuanLyTheDocGia_CellContentClick);
             this.dgv_QuanLyTheDocGia.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgv_QuanLyTheDocGia_MouseClick);
             // 
+            // button6
+            // 
+            this.button6.BackgroundImage = global::GUI.Properties.Resources.ktmt;
+            this.button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button6.Location = new System.Drawing.Point(12, 12);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(70, 53);
+            this.button6.TabIndex = 1;
+            this.button6.UseVisualStyleBackColor = true;
+            // 
             // frmQuanLyTheDocGia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.ClientSize = new System.Drawing.Size(800, 521);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "frmQuanLyTheDocGia";
             this.Text = "frmQuanLyTheDocGia";
@@ -599,5 +611,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ComboBox comboBox_TimKiem;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
     }
 }

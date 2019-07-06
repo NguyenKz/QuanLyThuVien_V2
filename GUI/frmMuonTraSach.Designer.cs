@@ -28,9 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMuonTraSach));
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
@@ -58,6 +55,7 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.textBox_TenSach = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.label_KetQuaMuon = new System.Windows.Forms.Label();
             this.flowLayoutPanel7 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
@@ -92,7 +90,7 @@
             this.comboBox_PhuongThuc = new System.Windows.Forms.ComboBox();
             this.button_Tim = new System.Windows.Forms.Button();
             this.dataGridView_Data = new System.Windows.Forms.DataGridView();
-            this.label_KetQuaMuon = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel6.SuspendLayout();
@@ -156,6 +154,7 @@
             this.flowLayoutPanel6.Controls.Add(this.label_KetQuaMaSach);
             this.flowLayoutPanel6.Controls.Add(this.panel4);
             this.flowLayoutPanel6.Controls.Add(this.label_KetQuaMuon);
+            this.flowLayoutPanel6.Controls.Add(this.button2);
             this.flowLayoutPanel6.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.flowLayoutPanel6.Location = new System.Drawing.Point(3, 3);
@@ -392,6 +391,17 @@
             this.label4.Size = new System.Drawing.Size(64, 13);
             this.label4.TabIndex = 0;
             this.label4.Text = "Tên sách:";
+            // 
+            // label_KetQuaMuon
+            // 
+            this.label_KetQuaMuon.AutoSize = true;
+            this.label_KetQuaMuon.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_KetQuaMuon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.label_KetQuaMuon.Location = new System.Drawing.Point(3, 296);
+            this.label_KetQuaMuon.Name = "label_KetQuaMuon";
+            this.label_KetQuaMuon.Size = new System.Drawing.Size(48, 13);
+            this.label_KetQuaMuon.TabIndex = 1;
+            this.label_KetQuaMuon.Text = "label12";
             // 
             // flowLayoutPanel7
             // 
@@ -651,9 +661,9 @@
             this.radioButton_SachQuaHanChuaTra.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.radioButton_SachQuaHanChuaTra.Location = new System.Drawing.Point(292, 3);
             this.radioButton_SachQuaHanChuaTra.Name = "radioButton_SachQuaHanChuaTra";
-            this.radioButton_SachQuaHanChuaTra.Size = new System.Drawing.Size(174, 17);
+            this.radioButton_SachQuaHanChuaTra.Size = new System.Drawing.Size(173, 17);
             this.radioButton_SachQuaHanChuaTra.TabIndex = 0;
-            this.radioButton_SachQuaHanChuaTra.Text = "Sách quá hạn trả chưa trả";
+            this.radioButton_SachQuaHanChuaTra.Text = "Sách quá hạn và chưa trả";
             this.radioButton_SachQuaHanChuaTra.UseVisualStyleBackColor = true;
             this.radioButton_SachQuaHanChuaTra.CheckedChanged += new System.EventHandler(this.radioButton_SachQuaHan_CheckedChanged);
             // 
@@ -661,7 +671,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(472, 0);
+            this.label8.Location = new System.Drawing.Point(471, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(0, 13);
             this.label8.TabIndex = 1;
@@ -671,7 +681,7 @@
             this.radioButton_SachQuaHanDaTra.AutoSize = true;
             this.radioButton_SachQuaHanDaTra.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioButton_SachQuaHanDaTra.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.radioButton_SachQuaHanDaTra.Location = new System.Drawing.Point(478, 3);
+            this.radioButton_SachQuaHanDaTra.Location = new System.Drawing.Point(477, 3);
             this.radioButton_SachQuaHanDaTra.Name = "radioButton_SachQuaHanDaTra";
             this.radioButton_SachQuaHanDaTra.Size = new System.Drawing.Size(142, 17);
             this.radioButton_SachQuaHanDaTra.TabIndex = 0;
@@ -684,7 +694,7 @@
             this.radioButton_KetQuaTimKiem.AutoSize = true;
             this.radioButton_KetQuaTimKiem.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.radioButton_KetQuaTimKiem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.radioButton_KetQuaTimKiem.Location = new System.Drawing.Point(626, 3);
+            this.radioButton_KetQuaTimKiem.Location = new System.Drawing.Point(625, 3);
             this.radioButton_KetQuaTimKiem.Name = "radioButton_KetQuaTimKiem";
             this.radioButton_KetQuaTimKiem.Size = new System.Drawing.Size(119, 17);
             this.radioButton_KetQuaTimKiem.TabIndex = 0;
@@ -773,46 +783,21 @@
             // dataGridView_Data
             // 
             this.dataGridView_Data.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Data.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_Data.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView_Data.Location = new System.Drawing.Point(3, 72);
             this.dataGridView_Data.Name = "dataGridView_Data";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_Data.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView_Data.Size = new System.Drawing.Size(1024, 128);
             this.dataGridView_Data.TabIndex = 1;
             this.dataGridView_Data.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView_Data_MouseClick);
             // 
-            // label_KetQuaMuon
+            // button2
             // 
-            this.label_KetQuaMuon.AutoSize = true;
-            this.label_KetQuaMuon.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_KetQuaMuon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.label_KetQuaMuon.Location = new System.Drawing.Point(3, 296);
-            this.label_KetQuaMuon.Name = "label_KetQuaMuon";
-            this.label_KetQuaMuon.Size = new System.Drawing.Size(48, 13);
-            this.label_KetQuaMuon.TabIndex = 1;
-            this.label_KetQuaMuon.Text = "label12";
+            this.button2.BackgroundImage = global::GUI.Properties.Resources.ktmt;
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button2.Location = new System.Drawing.Point(402, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(121, 114);
+            this.button2.TabIndex = 1;
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // frmMuonTraSach
             // 
@@ -928,5 +913,6 @@
         private System.Windows.Forms.Button button_MuonSach;
         private System.Windows.Forms.Button button_Tim;
         private System.Windows.Forms.DataGridView dataGridView_Data;
+        private System.Windows.Forms.Button button2;
     }
 }

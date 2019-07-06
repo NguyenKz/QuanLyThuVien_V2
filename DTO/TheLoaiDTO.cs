@@ -8,9 +8,10 @@ namespace DTO
     {
         String maTheLoai;
         String tenTheLoai;
-
+        DateTime ngay;
 
         public string MaTheLoai { get => maTheLoai; set => maTheLoai = value; }
         public string TenTheLoai { get => tenTheLoai; set => tenTheLoai = value; }
+        public DateTime Ngay { get => ngay; set => ngay = value; }
     }
 }

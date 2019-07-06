@@ -45,6 +45,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
+            this.thốngTinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -146,6 +147,7 @@
             // hệThốngToolStripMenuItem
             // 
             this.hệThốngToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.thốngTinToolStripMenuItem,
             this.thoátỨngDụngToolStripMenuItem});
             this.hệThốngToolStripMenuItem.Name = "hệThốngToolStripMenuItem";
             this.hệThốngToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
@@ -154,8 +156,9 @@
             // thoátỨngDụngToolStripMenuItem
             // 
             this.thoátỨngDụngToolStripMenuItem.Name = "thoátỨngDụngToolStripMenuItem";
-            this.thoátỨngDụngToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.thoátỨngDụngToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.thoátỨngDụngToolStripMenuItem.Text = "Thoát ứng dụng";
+            this.thoátỨngDụngToolStripMenuItem.Click += new System.EventHandler(this.thoátỨngDụngToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -168,8 +171,9 @@
             // versionToolStripMenuItem
             // 
             this.versionToolStripMenuItem.Name = "versionToolStripMenuItem";
-            this.versionToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.versionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.versionToolStripMenuItem.Text = "Version";
+            this.versionToolStripMenuItem.Click += new System.EventHandler(this.versionToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -182,6 +186,13 @@
             this.label1.Size = new System.Drawing.Size(258, 28);
             this.label1.TabIndex = 1;
             this.label1.Text = "Đồ án quản lý thư viện.";
+            // 
+            // thốngTinToolStripMenuItem
+            // 
+            this.thốngTinToolStripMenuItem.Name = "thốngTinToolStripMenuItem";
+            this.thốngTinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.thốngTinToolStripMenuItem.Text = "Thống tin.";
+            this.thốngTinToolStripMenuItem.Click += new System.EventHandler(this.thốngTinToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -224,6 +235,7 @@
         private System.Windows.Forms.ToolStripMenuItem quảnLýMượnTrảSáchToolStripMenuItem1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripMenuItem báoCáoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem thốngTinToolStripMenuItem;
     }
 }
 

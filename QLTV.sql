@@ -165,3 +165,4 @@ and [dbo].[tblPhieuMuon].maSach=[dbo].[tblPhieuTra].maSach
 
 
 
+select * from [tblPhieuMuon],[tblSach]
