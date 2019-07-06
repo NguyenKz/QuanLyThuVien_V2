@@ -46,7 +46,7 @@ CREATE TABLE [dbo].[tblTheDocGia](
 	GO
 
 
-INSERT INTO[dbo].[tblTheDocGia]([maDocGia],[hoVaTenDocGia],[ngaySinh],[diaChi],[email],[maLoaiDocGia],[ngayLapThe],[hanSuDung]) VALUES('DG00001',N'Trần Thảo Nguyên','1998-03-19',N'Bến Cầu-Tây Ninh','123@gmail.com','Loai002','2019-1-1',5)
+INSERT INTO[dbo].[tblTheDocGia]([maDocGia],[hoVaTenDocGia],[ngaySinh],[diaChi],[email],[maLoaiDocGia],[ngayLapThe],[hanSuDung]) VALUES('DG00001',N'Trần Thảo Nguyên','1998-03-19',N'Bến Cầu-Tây Ninh','123@gmail.com','Loai002','2018-5-5',5)
 go																												
 INSERT INTO[dbo].[tblTheDocGia]([maDocGia],[hoVaTenDocGia],[ngaySinh],[diaChi],[email],[maLoaiDocGia],[ngayLapThe],[hanSuDung]) VALUES('DG00002',N'Hoàng Văn Khải','1999-1-2',N'Đắk Lắk','456@gmail.com','Loai001','2019-2-1',5)
 GO																												
@@ -71,9 +71,11 @@ CREATE TABLE [dbo].[tblTheLoai](
 	)
 	GO
 
-INSERT INTO[dbo].[tblTheLoai]([maTheLoai],[tenTheLoai]) VALUES('ThLo001',N'Tiểu thuyết')
+INSERT INTO[dbo].[tblTheLoai]([maTheLoai],[tenTheLoai]) VALUES('ThLo001',N'A')
 GO
-INSERT INTO[dbo].[tblTheLoai]([maTheLoai],[tenTheLoai]) VALUES('ThLo002',N'Trinh thám')
+INSERT INTO[dbo].[tblTheLoai]([maTheLoai],[tenTheLoai]) VALUES('ThLo002',N'B')
+GO
+INSERT INTO[dbo].[tblTheLoai]([maTheLoai],[tenTheLoai]) VALUES('ThLo003',N'C')
 GO
 select * from [dbo].[tblTheLoai]
 
@@ -88,12 +90,34 @@ CREATE TABLE [dbo].[tblSach](
 	[triGia] int
 	)
 	GO
-
+	CREATE TABLE [dbo].[tblQuyDinh](
+	[maQuyDinh] [varchar](7) primary key,
+	[doTuoiToiThieu] int NOT NULL ,
+	[doTuoiToiDa] int NOT NULL,
+	[khoangCachNamXuatBan] int NOT NULL,
+	[soSachMuonToiDa] int NOT NULL,
+	[soNgayMuonToiDa] int NOT NULL	
+	)
+	GO
+	INSERT INTO[dbo].[tblQuyDinh]([maQuyDinh],[doTuoiToiThieu],[doTuoiToiDa],[khoangCachNamXuatBan],[soSachMuonToiDa],[soNgayMuonToiDa] ) VALUES('QD00001',18,	55,8,5,4)
+	GO
+	select * from tblQuyDinh
 INSERT INTO[dbo].[tblSach]([maSach],[TenSach],[ngayNhap],[tacGia],[nhaXuatBan],[maTheLoai],[namXuatBan],[triGia]) VALUES('SA00001',N'Nhập môn công nghệ phần mềm','1998-03-19',N'Trần Thảo Nguyên','A20_P315','ThLo002','2019-1-1',15000)
 go
 INSERT INTO[dbo].[tblSach]([maSach],[TenSach],[ngayNhap],[tacGia],[nhaXuatBan],[maTheLoai],[namXuatBan],[triGia]) VALUES('SA00002',N'Pham nhân tu tiên','1998-03-19',N'Trần Thảo Nguyên','A20_P315','ThLo002','2019-1-1',15000)
 go
-
+INSERT INTO[dbo].[tblSach]([maSach],[TenSach],[ngayNhap],[tacGia],[nhaXuatBan],[maTheLoai],[namXuatBan],[triGia]) VALUES('SA00003',N'Làm giàu','1998-03-19',N'Trần Thảo Nguyên','A20_P315','ThLo002','2019-1-1',15000)
+go
+INSERT INTO[dbo].[tblSach]([maSach],[TenSach],[ngayNhap],[tacGia],[nhaXuatBan],[maTheLoai],[namXuatBan],[triGia]) VALUES('SA00004',N'Thức sớm','1998-03-19',N'Trần Thảo Nguyên','A20_P315','ThLo002','2019-1-1',15000)
+go
+INSERT INTO[dbo].[tblSach]([maSach],[TenSach],[ngayNhap],[tacGia],[nhaXuatBan],[maTheLoai],[namXuatBan],[triGia]) VALUES('SA00005',N'Người triều châu','1998-03-19',N'Trần Thảo Nguyên','A20_P315','ThLo002','2019-1-1',15000)
+go
+INSERT INTO[dbo].[tblSach]([maSach],[TenSach],[ngayNhap],[tacGia],[nhaXuatBan],[maTheLoai],[namXuatBan],[triGia]) VALUES('SA00006',N'Người triều tiên','1998-03-19',N'Trần Thảo Nguyên','A20_P315','ThLo002','2019-1-1',15000)
+go
+INSERT INTO[dbo].[tblSach]([maSach],[TenSach],[ngayNhap],[tacGia],[nhaXuatBan],[maTheLoai],[namXuatBan],[triGia]) VALUES('SA00007',N'Người dân tộc','1998-03-19',N'Trần Thảo Nguyên','A20_P315','ThLo002','2019-1-1',15000)
+go
+INSERT INTO[dbo].[tblSach]([maSach],[TenSach],[ngayNhap],[tacGia],[nhaXuatBan],[maTheLoai],[namXuatBan],[triGia]) VALUES('SA00008',N'Người da đỏ','1998-03-19',N'Trần Thảo Nguyên','A20_P315','ThLo002','2019-1-1',15000)
+go
 SELECT * FROM [dbo].[tblSach],[dbo].[tblTheLoai]
 WHERE [dbo].[tblSach].[maTheLoai]=[dbo].[tblTheLoai].[maTheLoai]
 GO
@@ -116,17 +140,28 @@ go
 
 CREATE TABLE [dbo].[tblPhieuTra](
 	[maPhieu] [varchar](7) primary key,
-	[maSach] [varchar](7) FOREIGN KEY REFERENCES [dbo].[tblSach] ([maSach]) ,
-	[maDocGia] [varchar](7) FOREIGN KEY REFERENCES [dbo].[tblTheDocGia] ([maDocGia]) ,
-	[ngayTra] datetime2(7)
+	[maSach] [varchar](7) NOT NULL ,
+	[maDocGia] [varchar](7) NOT NULL ,
+	[ngayTra] datetime2(7),
+
+	
 	)
 	GO
-INSERT INTO[dbo].[tblPhieuTra]([maPhieu],[maSach],[maDocGia],[ngayTra]) VALUES('Tr00001','SA00002','DG00003','2019-3-1')
-go
+ALTER TABLE [tblPhieuTra]
+ ADD CONSTRAINT fk_ten
+   FOREIGN KEY ([maSach], [maDocGia])
+   REFERENCES [tblTheDocGia],[tblSach] ([maSach], [maDocGia]);
+
+--INSERT INTO[dbo].[tblPhieuTra]([maPhieu],[maSach],[maDocGia],[ngayTra]) VALUES('Tr00004','SA00002','DG00004','2019-3-1')
+--go
+--select * from [tblPhieuTra]
+--INSERT INTO[dbo].[tblPhieuTra]([maPhieu],[maSach],[maDocGia],[ngayTra]) VALUES('Tr00001','SA00002','DG00003','2019-3-1')
+
 
 SELECT * FROM [dbo].[tblPhieuMuon] LEFT JOIN  [dbo].[tblPhieuTra] 
 ON [dbo].[tblPhieuMuon].maDocGia=[dbo].[tblPhieuTra].maDocGia 
 and [dbo].[tblPhieuMuon].maSach=[dbo].[tblPhieuTra].maSach
+
 
 
 

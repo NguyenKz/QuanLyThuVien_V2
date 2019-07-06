@@ -473,6 +473,7 @@
             this.dgv_QuanLyTheDocGia.Name = "dgv_QuanLyTheDocGia";
             this.dgv_QuanLyTheDocGia.Size = new System.Drawing.Size(755, 176);
             this.dgv_QuanLyTheDocGia.TabIndex = 0;
+            this.dgv_QuanLyTheDocGia.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_QuanLyTheDocGia_CellContentClick);
             this.dgv_QuanLyTheDocGia.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgv_QuanLyTheDocGia_MouseClick);
             // 
             // frmQuanLyTheDocGia

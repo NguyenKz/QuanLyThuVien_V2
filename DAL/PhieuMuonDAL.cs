@@ -68,6 +68,7 @@ namespace DAL
                         cmd.Parameters.AddWithValue("@maDocGiam", temp.MaDocGia);
                         cmd.Parameters.AddWithValue("@ngayTra", temp.NgayTra.Year + "-" + temp.NgayTra.Month + "-" + temp.NgayTra.Day);
                     }
+                    Console.WriteLine("Ma Ta:" + temp.MaPhieuTra + "ma sach" + temp.MaSach + " Ma doc gia " + temp.MaDocGia);
                     try
                     {
                         con.Open();
@@ -87,32 +88,26 @@ namespace DAL
             }
             return true;
         }
-        public List<PhieuMuonDTO> select(String key, int Type)
+        public List<PhieuMuonDTO> select()
         {
 
 
 
             Console.WriteLine("========================================================");
-            Console.WriteLine("Tim kiem doc gia bang: " + Type);
+  
             string query = string.Empty;
-            string tag = "";
-            switch (Type)
-            {
-                case TimToanBo:
-                    query += "SELECT [dbo].[tblPhieuTra].maPhieu maPhieuTra,";
-                    query += "[dbo].[tblPhieuMuon].maPhieu maPhieuMuon,";
-                    query += "[dbo].[tblPhieuMuon].maDocGia,";
-                    query += "[dbo].[tblPhieuMuon].maSach  ,";
-                    query += "[dbo].[tblPhieuMuon].thoiHang ,";
-                    query += "[dbo].[tblPhieuMuon].ngayMuon ,";
-                    query += "[dbo].[tblPhieuTra].ngayTra  ";
-          
-                    query += "FROM[dbo].[tblPhieuMuon] LEFT JOIN[dbo].[tblPhieuTra]";
-                    query +="ON [dbo].[tblPhieuMuon].maDocGia=[dbo].[tblPhieuTra].maDocGia ";
-                    query += "and [dbo].[tblPhieuMuon].maSach=[dbo].[tblPhieuTra].maSach    ";
+            query += "SELECT [dbo].[tblPhieuTra].maPhieu maPhieuTra,";
+            query += "[dbo].[tblPhieuMuon].maPhieu maPhieuMuon,";
+            query += "[dbo].[tblPhieuMuon].maDocGia,";
+            query += "[dbo].[tblPhieuMuon].maSach  ,";
+            query += "[dbo].[tblPhieuMuon].thoiHang ,";
+            query += "[dbo].[tblPhieuMuon].ngayMuon ,";
+            query += "[dbo].[tblPhieuTra].ngayTra  ";
 
-                    break;
-            }
+            query += "FROM[dbo].[tblPhieuMuon] LEFT JOIN[dbo].[tblPhieuTra]";
+            query += "ON [dbo].[tblPhieuMuon].maDocGia=[dbo].[tblPhieuTra].maDocGia ";
+            query += "and [dbo].[tblPhieuMuon].maSach=[dbo].[tblPhieuTra].maSach    ";
+           
 
 
             List<PhieuMuonDTO> ListDocGia = new List<PhieuMuonDTO>();
@@ -125,10 +120,7 @@ namespace DAL
                     cmd.Connection = con;
                     cmd.CommandType = System.Data.CommandType.Text;
                     cmd.CommandText = query;
-                    if (tag.Length > 0)
-                    {
-                        cmd.Parameters.AddWithValue(tag, key);
-                    }
+                   
 
 
                     try
@@ -162,24 +154,8 @@ namespace DAL
                         
                                 
                                 temp.getTinhTrang();
-
-                                switch (Type)
-                                {
-                                    case TatCa:
-
-                                        ListDocGia.Add(temp);
-
-                                        break;
-                                    case SachChuaTra:
-
-                                        if (temp.MaPhieuTra == "NULL")
-                                        {
-                                            ListDocGia.Add(temp);
-                                        }
-                                        break;
-
-
-                                }
+                                ListDocGia.Add(temp);
+                             
 
                               
                             }

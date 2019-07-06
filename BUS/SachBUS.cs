@@ -32,9 +32,9 @@ namespace BUS
             bool re = tempDAL.sua(temp);
             return re;
         }
-        public List<SachDTO> select(string key, int Type)
+        public List<SachDTO> select(List<PhieuMuonDTO> listPhieuMuon)
         {
-            return tempDAL.select(key, Type);
+            return tempDAL.select(listPhieuMuon);
         }
     }
 }

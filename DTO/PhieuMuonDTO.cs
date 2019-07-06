@@ -25,6 +25,8 @@ namespace DTO
         private int tinhTrang;
         private String strTinhTrang;
         private int soNgayQuaHan;
+        private bool theConHan;
+        
         public string MaPhieuMuon { get => maPhieuMuon; set => maPhieuMuon = value; }
         public string MaPhieuTra { get => maPhieuTra; set => maPhieuTra = value; }
         public string MaSach { get => maSach; set => maSach = value; }
@@ -39,6 +41,7 @@ namespace DTO
         public int TinhTrang { get => tinhTrang; set => tinhTrang = value; }
         public string StrTinhTrang { get => strTinhTrang; set => strTinhTrang = value; }
         public int SoNgayQuaHan { get => soNgayQuaHan; set => soNgayQuaHan = value; }
+        public bool TheConHan { get => theConHan; set => theConHan = value; }
 
         public void getTinhTrang() {
 

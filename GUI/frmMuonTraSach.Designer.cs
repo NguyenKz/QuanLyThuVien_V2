@@ -32,6 +32,10 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.textBox_MaPhieuMuon = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.textBox_MaTra = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -80,18 +84,15 @@
             this.flowLayoutPanel8 = new System.Windows.Forms.FlowLayoutPanel();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox_NoiDungTimKiem = new System.Windows.Forms.TextBox();
+            this.checkBox_ChuaTra = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
             this.comboBox_PhuongThuc = new System.Windows.Forms.ComboBox();
             this.button_Tim = new System.Windows.Forms.Button();
             this.dataGridView_Data = new System.Windows.Forms.DataGridView();
-            this.panel12 = new System.Windows.Forms.Panel();
-            this.textBox_MaPhieuMuon = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.checkBox_ChuaTra = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel6.SuspendLayout();
+            this.panel12.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -109,7 +110,6 @@
             this.flowLayoutPanel5.SuspendLayout();
             this.flowLayoutPanel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Data)).BeginInit();
-            this.panel12.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -152,8 +152,44 @@
             this.flowLayoutPanel6.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel6.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel6.Name = "flowLayoutPanel6";
-            this.flowLayoutPanel6.Size = new System.Drawing.Size(554, 315);
+            this.flowLayoutPanel6.Size = new System.Drawing.Size(636, 315);
             this.flowLayoutPanel6.TabIndex = 0;
+            // 
+            // panel12
+            // 
+            this.panel12.Controls.Add(this.textBox_MaPhieuMuon);
+            this.panel12.Controls.Add(this.label14);
+            this.panel12.Controls.Add(this.label15);
+            this.panel12.Location = new System.Drawing.Point(3, 3);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(393, 39);
+            this.panel12.TabIndex = 0;
+            // 
+            // textBox_MaPhieuMuon
+            // 
+            this.textBox_MaPhieuMuon.Location = new System.Drawing.Point(92, 11);
+            this.textBox_MaPhieuMuon.Name = "textBox_MaPhieuMuon";
+            this.textBox_MaPhieuMuon.ReadOnly = true;
+            this.textBox_MaPhieuMuon.Size = new System.Drawing.Size(298, 20);
+            this.textBox_MaPhieuMuon.TabIndex = 1;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(3, 14);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(83, 13);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Mã phiếu mượn:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(3, 238);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(55, 13);
+            this.label15.TabIndex = 0;
+            this.label15.Text = "Mã Phiếu:";
             // 
             // panel1
             // 
@@ -224,7 +260,6 @@
             // label_KetQuaMaDG
             // 
             this.label_KetQuaMaDG.AutoSize = true;
-            this.label_KetQuaMaDG.Enabled = false;
             this.label_KetQuaMaDG.Location = new System.Drawing.Point(3, 135);
             this.label_KetQuaMaDG.Name = "label_KetQuaMaDG";
             this.label_KetQuaMaDG.Size = new System.Drawing.Size(41, 13);
@@ -289,7 +324,6 @@
             // label_KetQuaMaSach
             // 
             this.label_KetQuaMaSach.AutoSize = true;
-            this.label_KetQuaMaSach.Enabled = false;
             this.label_KetQuaMaSach.Location = new System.Drawing.Point(3, 238);
             this.label_KetQuaMaSach.Name = "label_KetQuaMaSach";
             this.label_KetQuaMaSach.Size = new System.Drawing.Size(41, 13);
@@ -334,9 +368,9 @@
             // 
             this.flowLayoutPanel7.Controls.Add(this.panel5);
             this.flowLayoutPanel7.Controls.Add(this.panel6);
-            this.flowLayoutPanel7.Location = new System.Drawing.Point(563, 3);
+            this.flowLayoutPanel7.Location = new System.Drawing.Point(645, 3);
             this.flowLayoutPanel7.Name = "flowLayoutPanel7";
-            this.flowLayoutPanel7.Size = new System.Drawing.Size(446, 315);
+            this.flowLayoutPanel7.Size = new System.Drawing.Size(370, 315);
             this.flowLayoutPanel7.TabIndex = 0;
             // 
             // panel5
@@ -422,6 +456,11 @@
             this.numericUpDown_ThoiHan.Name = "numericUpDown_ThoiHan";
             this.numericUpDown_ThoiHan.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown_ThoiHan.TabIndex = 1;
+            this.numericUpDown_ThoiHan.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             // 
             // label12
             // 
@@ -614,6 +653,16 @@
             this.textBox_NoiDungTimKiem.Size = new System.Drawing.Size(287, 20);
             this.textBox_NoiDungTimKiem.TabIndex = 1;
             // 
+            // checkBox_ChuaTra
+            // 
+            this.checkBox_ChuaTra.AutoSize = true;
+            this.checkBox_ChuaTra.Location = new System.Drawing.Point(396, 3);
+            this.checkBox_ChuaTra.Name = "checkBox_ChuaTra";
+            this.checkBox_ChuaTra.Size = new System.Drawing.Size(66, 17);
+            this.checkBox_ChuaTra.TabIndex = 3;
+            this.checkBox_ChuaTra.Text = "Chưa trả";
+            this.checkBox_ChuaTra.UseVisualStyleBackColor = true;
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -652,52 +701,6 @@
             this.dataGridView_Data.TabIndex = 1;
             this.dataGridView_Data.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView_Data_MouseClick);
             // 
-            // panel12
-            // 
-            this.panel12.Controls.Add(this.textBox_MaPhieuMuon);
-            this.panel12.Controls.Add(this.label14);
-            this.panel12.Controls.Add(this.label15);
-            this.panel12.Location = new System.Drawing.Point(3, 3);
-            this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(393, 39);
-            this.panel12.TabIndex = 0;
-            // 
-            // textBox_MaPhieuMuon
-            // 
-            this.textBox_MaPhieuMuon.Location = new System.Drawing.Point(92, 11);
-            this.textBox_MaPhieuMuon.Name = "textBox_MaPhieuMuon";
-            this.textBox_MaPhieuMuon.ReadOnly = true;
-            this.textBox_MaPhieuMuon.Size = new System.Drawing.Size(298, 20);
-            this.textBox_MaPhieuMuon.TabIndex = 1;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(3, 14);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(83, 13);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "Mã phiếu mượn:";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(3, 238);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(55, 13);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "Mã Phiếu:";
-            // 
-            // checkBox_ChuaTra
-            // 
-            this.checkBox_ChuaTra.AutoSize = true;
-            this.checkBox_ChuaTra.Location = new System.Drawing.Point(396, 3);
-            this.checkBox_ChuaTra.Name = "checkBox_ChuaTra";
-            this.checkBox_ChuaTra.Size = new System.Drawing.Size(66, 17);
-            this.checkBox_ChuaTra.TabIndex = 3;
-            this.checkBox_ChuaTra.Text = "Chưa trả";
-            this.checkBox_ChuaTra.UseVisualStyleBackColor = true;
-            // 
             // frmMuonTraSach
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -711,6 +714,8 @@
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel6.ResumeLayout(false);
             this.flowLayoutPanel6.PerformLayout();
+            this.panel12.ResumeLayout(false);
+            this.panel12.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel7.ResumeLayout(false);
@@ -739,8 +744,6 @@
             this.flowLayoutPanel8.ResumeLayout(false);
             this.flowLayoutPanel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Data)).EndInit();
-            this.panel12.ResumeLayout(false);
-            this.panel12.PerformLayout();
             this.ResumeLayout(false);
 
         }

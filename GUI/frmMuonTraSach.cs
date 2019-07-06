@@ -15,7 +15,8 @@ namespace GUI
     public partial class frmMuonTraSach : Form
     {
 
-
+        private List<QuyDinhDTO> listQD;
+        private QuyDinhBUS qdBUS;
         public const int ToanBo = 0;
         public const int MaPhieuMuon = 1;
         public const int MaPhieuTra = 2;
@@ -31,6 +32,7 @@ namespace GUI
         private Boolean DuLieuDung_DocGia = true;
         private Boolean DuLieuDung_Sach = true;
         private Boolean DuLieuDung_ThoiHan = true;
+        private bool DieuKienMuon = true;
         public frmMuonTraSach()
         {
             InitializeComponent();
@@ -60,7 +62,8 @@ namespace GUI
         }
         private void LoadTatCaPhieuMuonTra()
         {
-            listPhieuMuon = pmBus.select("", 0);
+          
+            listPhieuMuon = pmBus.select();
 
 
 
@@ -107,7 +110,7 @@ namespace GUI
 
         private void loadMaSach_Combobox()
         {
-            this.listSach = this.sachBus.select("", 0);
+            this.listSach = this.sachBus.select(listPhieuMuon);
 
             if (listDocGia == null)
             {
@@ -129,10 +132,14 @@ namespace GUI
 
         }
 
-
+        
 
         private void frmMuonTraSach_Load(object sender, EventArgs e)
         {
+            qdBUS = new QuyDinhBUS();
+            listQD = new List<QuyDinhDTO>();
+            listQD = qdBUS.select();
+
             this.comboBox_PhuongThuc.Items.Insert(0, "Toàn bộ");
             this.comboBox_PhuongThuc.Items.Insert(1, "Bằng mã phiếu mượn");
             this.comboBox_PhuongThuc.Items.Insert(2, "Bằng mã phiếu trả");
@@ -147,7 +154,7 @@ namespace GUI
             listDocGia = new List<DocGiaDTO>();
             listSach=new List<SachDTO>();
             //  loadData_Vao_GridView("", DocGiaDAL.TimToanBo);
-            listPhieuMuon = pmBus.select("", 0);
+            listPhieuMuon = pmBus.select();
             loadLoaiDocGia_Combobox();
             loadMaSach_Combobox();
             loadData_Vao_GridView(listPhieuMuon);
@@ -432,144 +439,212 @@ namespace GUI
             }
         }
 
+
+        private bool quaSachDaMuonTrong4ngay(String maDocGia)
+        {
+            int count = 0;
+            foreach(PhieuMuonDTO temp in listPhieuMuon)
+            {
+              
+                if (temp.MaDocGia == maDocGia)
+                {
+                  
+                    if (((int)(DateTime.Now.Subtract(temp.NgayMuon).TotalDays)) <= listQD[0].SoNgayMuonToiDa)
+                    {
+                        count++;
+                   
+                        if (count > listQD[0].SoSachMuonToiDa) return false;
+                       
+                    }
+                }
+            }
+
+            return true;
+        }
+        private int theConHan(String maDocGia)
+        {
+    
+            foreach (DocGiaDTO temp in listDocGia)
+            {
+                if (temp.Ma == maDocGia)
+                {
+                    Console.WriteLine(temp.NgayLapThe.ToString());
+                    return (int)((DateTime.Now.Subtract(temp.NgayLapThe).TotalDays)) - 6 * 30;
+                    
+                }
+            }
+
+            return 0;
+        }
+
+        private bool KhongCoSachMuonQuaHan(String maDocGia)
+        {
+            int count = 0;
+            foreach (PhieuMuonDTO temp in listPhieuMuon)
+            {
+                if (temp.MaDocGia == maDocGia)
+                {
+                    if ((temp.TinhTrang==PhieuMuonDTO.QuaHanVaChuaTra) || (temp.TinhTrang==PhieuMuonDTO.QuaHanVaDaTra))
+                    {
+                       return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private bool SachChuaDuocMuon(String maSach)
+        {
+            int count = 0;
+            foreach (PhieuMuonDTO temp in listPhieuMuon)
+            {
+                if (temp.MaSach == maSach&&temp.MaPhieuTra=="NULL")
+                {       
+                        return false;
+                    
+                }
+            }
+
+            return true;
+        }
+
+        private bool DuocTraSach(String maSach,String maDocGia)
+        {
+
+            foreach (PhieuMuonDTO temp in listPhieuMuon)
+            {
+                if (temp.MaSach == maSach && temp.MaDocGia == maDocGia)
+                {
+                    if (temp.MaPhieuTra == "NULL")
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+        private String getMaPhieuMuon(String madg,String maS) {
+
+            foreach (PhieuMuonDTO pm in listPhieuMuon)
+            {
+                if (pm.MaDocGia == madg&&pm.MaSach==maS)
+                {
+                    return pm.MaPhieuMuon;
+                }
+            }
+
+            return "NULL";
+        }
+        private String getMaPhieuTra(String madg, String maS)
+        {
+
+            foreach (PhieuMuonDTO pm in listPhieuMuon)
+            {
+                if (pm.MaDocGia == madg && pm.MaSach == maS)
+                {
+                    return pm.MaPhieuTra;
+                }
+            }
+
+            return "NULL";
+        }
+
         private void comboBox_MaDocGia_TextChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(this.comboBox_MaDocGia.Text);
-            this.label_KetQuaMaDG.Text = "*Đọc giả không tồn tại";
-            this.label_KetQuaMaDG.ForeColor = Color.Red;
-            this.label_KetQuaMaDG.Enabled = true;
-            DuLieuDung_DocGia = false;
-            this.textBox_TenDocGia.Text = "*NULL";
-            foreach (DocGiaDTO temp in listDocGia) {
-                if (temp.Ma== this.comboBox_MaDocGia.Text)
-                {
-                    this.textBox_TenDocGia.Text = temp.HovaTen;
-                    this.label_KetQuaMaDG.Text = "*Mã đọc giả đúng";
-                    this.label_KetQuaMaDG.ForeColor = Color.Blue;
-                    DuLieuDung_DocGia = true;
-
-                    break;
-                }
-            }
-  
-            
-            Boolean coTrongDanhSach = false;
-            for (int i = listPhieuMuon.Count - 1; i >= 0; i--)
+            DuLieuDung_DocGia = true;
+            String ma=this.comboBox_MaDocGia.Text;
+            if (DuocTraSach(this.comboBox_MaSach.Text, ma))
             {
-
-                if (listPhieuMuon[i].MaDocGia == this.comboBox_MaDocGia.Text & listPhieuMuon[i].MaSach == this.comboBox_MaSach.Text)
-                {
-                    this.textBox_MaPhieuMuon.Text = listPhieuMuon[i].MaPhieuMuon;
-                    this.textBox_MaTra.Text = listPhieuMuon[i].MaPhieuTra;
-                    coTrongDanhSach = true;
-                    if (listPhieuMuon[i].MaPhieuTra == "NULL")
-                    {
-                        this.label_KetQuaMuon.Text = "Đọc giả đã mượn sách này và chưa trả.";
-                        this.label_KetQuaMuon.ForeColor = Color.Green;
-                        this.button_TraSach.Enabled = true;
-                        this.button_MuonSach.Enabled = false;
-                    }
-                    else
-                    {
-                        this.label_KetQuaMuon.Text = "Đọc giả không mượn sách này.";
-                        this.label_KetQuaMuon.ForeColor = Color.Green;
-                        this.button_TraSach.Enabled = false;
-                        this.button_MuonSach.Enabled = true;
-                    }
-                }
+                this.button_TraSach.Enabled = true;
+                this.textBox_MaPhieuMuon.Text = getMaPhieuMuon(ma,this.comboBox_MaSach.Text);
+                this.textBox_MaTra.Text = getMaPhieuTra(ma, this.comboBox_MaSach.Text);
             }
-            if (!coTrongDanhSach)
+            else
             {
-                this.textBox_MaPhieuMuon.Text = "NULL";
-                this.textBox_MaTra.Text ="NULL";
-                if (this.DuLieuDung_DocGia & this.DuLieuDung_Sach)
-                {
-                    this.button_MuonSach.Enabled = true;
-                    this.label_KetQuaMuon.ForeColor = Color.Green;
-                    this.label_KetQuaMuon.Text = "Đọc giả có thể mượn sách này.";
-                }
-                else
-                {
-                    this.button_MuonSach.Enabled = false;
-                    this.label_KetQuaMuon.ForeColor = Color.Red;
-                    this.label_KetQuaMuon.Text = "Dữ liệu bị sai.";
-                }
                 this.button_TraSach.Enabled = false;
             }
 
+            if (!quaSachDaMuonTrong4ngay(ma))
+            {
+                this.label_KetQuaMaDG.Text = "Qúa số lượng mượn trong "+listQD[0].SoNgayMuonToiDa+" ngày";
+                this.label_KetQuaMaDG.ForeColor = Color.Red;
+                this.button_MuonSach.Enabled = false;
+                DuLieuDung_DocGia = false;
+                return;
+            }
+            int han = theConHan(ma);
+           if (han>0)
+            {
+                this.label_KetQuaMaDG.Text = "Thẻ hết hạn "+han+" ngày." ;
+                this.label_KetQuaMaDG.ForeColor = Color.Red;
+                this.button_MuonSach.Enabled = false;
+                DuLieuDung_DocGia = false;
+                return;
+
+            }
+
+            if (!KhongCoSachMuonQuaHan(ma))
+            {
+                this.label_KetQuaMaDG.Text = "Có sách mượn quá hạn, không được mượn";
+                this.label_KetQuaMaDG.ForeColor = Color.Red;
+                this.button_MuonSach.Enabled = false;
+                DuLieuDung_DocGia = false;
+                return;
+
+            }
+
+            
+
+            this.label_KetQuaMaDG.Text = "Thẻ hợp lệ.";
+            this.label_KetQuaMaDG.ForeColor = Color.Green;
+            this.button_MuonSach.Enabled = DuLieuDung_DocGia & DuLieuDung_Sach;
 
 
-           
+
+
+
         }
 
         private void comboBox_MaSach_TextChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(this.comboBox_MaDocGia.Text);
-            this.label_KetQuaMaSach.Text = "*Sach không tồn tại";
-            this.label_KetQuaMaSach.ForeColor = Color.Red;
-            this.label_KetQuaMaSach.Enabled = true;
-            DuLieuDung_Sach = false;
-            this.textBox_TenSach.Text ="NULL";
-            foreach (SachDTO temp in listSach)
+            DuLieuDung_Sach = true;
+            String ma = this.comboBox_MaSach.Text;
+            if (DuocTraSach(ma, this.comboBox_MaDocGia.Text))
             {
-                if (temp.Ma == this.comboBox_MaSach.Text)
-                {
-                    this.textBox_TenSach.Text = temp.TenSach;
-                    this.label_KetQuaMaSach.Text = "*Mã sach đúng";
-                    this.label_KetQuaMaSach.ForeColor = Color.Blue;
-                    DuLieuDung_Sach = true;
-                    break;
-                }
+                this.button_TraSach.Enabled = true;
+                this.textBox_MaPhieuMuon.Text = getMaPhieuMuon(this.comboBox_MaDocGia.Text,ma);
+                this.textBox_MaTra.Text = getMaPhieuTra(this.comboBox_MaDocGia.Text, ma);
             }
-            Boolean coTrongDanhSach = false;
-            for (int i = listPhieuMuon.Count - 1; i >= 0; i--)
+            else
             {
-
-                if (listPhieuMuon[i].MaDocGia == this.comboBox_MaDocGia.Text & listPhieuMuon[i].MaSach == this.comboBox_MaSach.Text)
-                {
-                    coTrongDanhSach = true;
-                    this.textBox_MaPhieuMuon.Text = listPhieuMuon[i].MaPhieuMuon;
-                    this.textBox_MaTra.Text = listPhieuMuon[i].MaPhieuTra;
-                    if (listPhieuMuon[i].MaPhieuTra == "NULL")
-                    {
-                        
-                        this.label_KetQuaMuon.Text = "Đọc giả đã mượn sách này và chưa trả.";
-                        this.label_KetQuaMuon.ForeColor = Color.Green;
-                        this.button_TraSach.Enabled = true;
-                        this.button_MuonSach.Enabled = false;
-                    }
-                    else
-                    {
-                        this.label_KetQuaMuon.Text = "Đọc giả không mượn sách này.";
-                        this.label_KetQuaMuon.ForeColor = Color.Green;
-                        this.button_TraSach.Enabled = false;
-                        this.button_MuonSach.Enabled = true;
-                        
-                    }
-                }
-            }
-            if (!coTrongDanhSach)
-            {
-                this.textBox_MaPhieuMuon.Text = "NULL";
-                this.textBox_MaTra.Text = "NULL";
-                if (this.DuLieuDung_DocGia & this.DuLieuDung_Sach)
-                {
-                    
-                    this.button_MuonSach.Enabled = true;
-
-                    this.label_KetQuaMuon.ForeColor = Color.Green;
-
-                    this.label_KetQuaMuon.Text = "Đọc giả có thể mượn sách này.";
-                }
-                else
-                {
-                    this.button_MuonSach.Enabled = false;
-                    this.label_KetQuaMuon.ForeColor = Color.Red;
-                    this.label_KetQuaMuon.Text = "Dữ liệu bị sai.";
-                }
                 this.button_TraSach.Enabled = false;
             }
+            if (!SachChuaDuocMuon(ma))
+            {
+                this.label_KetQuaMaSach.Text = "Sách không có sắn";
+                this.label_KetQuaMaSach.ForeColor = Color.Red;
+                this.button_MuonSach.Enabled = false;
+                DuLieuDung_Sach = false;
+                button_MuonSach.Enabled = false;
+                return;
+            }
 
+            if (!quaSachDaMuonTrong4ngay(this.comboBox_MaDocGia.Text))
+            {
+                this.label_KetQuaMaDG.Text = "Qúa số lượng mượn trong 4 ngày";
+                this.label_KetQuaMaDG.ForeColor = Color.Red;
+                this.button_MuonSach.Enabled = false;
+                DuLieuDung_DocGia = false;
+                return;
+            }
+
+
+
+            this.label_KetQuaMaSach.Text = "Mã sách hợp lệ.";
+            this.label_KetQuaMaSach.ForeColor = Color.Green;
+            this.button_MuonSach.Enabled = DuLieuDung_DocGia & DuLieuDung_Sach;
 
         }
         private String TaoMa(String Ma)
@@ -595,11 +670,13 @@ namespace GUI
         }
         private void button_MuonSach_Click(object sender, EventArgs e)
         {
+
             //1. Map data from GUI
             PhieuMuonDTO temp = new PhieuMuonDTO();
             String Ma = this.TaoMa(listPhieuMuon[listPhieuMuon.Count - 1].MaPhieuMuon);
 
-
+            this.button_MuonSach.Enabled = false;
+            this.button_TraSach.Enabled = false;
 
             DialogResult dlr = MessageBox.Show("Bạn có muốn thêm thẻ với mã " + Ma + " không?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (dlr == DialogResult.Yes)
@@ -611,13 +688,15 @@ namespace GUI
                 temp.NgayMuon = DateTime.Now;
                 temp.ThoiHan = Convert.ToInt32(this.numericUpDown_ThoiHan.Value);
 
-                bool kq = pmBus.them(temp,true);
+                bool kq = pmBus.them(temp, true);
                 if (kq == false)
                     MessageBox.Show("Thêm Độc giả thất bại. Vui lòng kiểm tra lại dũ liệu");
                 else
                 {
-                    listPhieuMuon = pmBus.select("", 0);
+
+                    listPhieuMuon = pmBus.select();
                     MessageBox.Show("Thêm Độc giả thành công");
+                    this.comboBox_MaDocGia.Text = this.comboBox_MaDocGia.Text;
                     loadData_Vao_GridView(listPhieuMuon);
                     this.dataGridView_Data.FirstDisplayedScrollingRowIndex = dataGridView_Data.RowCount - 1;
 
@@ -653,10 +732,12 @@ namespace GUI
         {
             //1. Map data from GUI
             PhieuMuonDTO temp = new PhieuMuonDTO();
-            String Ma = this._TaoMa(listPhieuMuon[listPhieuMuon.Count - 1].MaPhieuMuon);
+            String Ma = this._TaoMa(this.textBox_MaPhieuMuon.Text);
 
-
-
+            Console.WriteLine(this.textBox_MaPhieuMuon.Text + "  "+  Ma);
+            this.button_MuonSach.Enabled = false;
+            this.button_TraSach.Enabled = false;
+      
             DialogResult dlr = MessageBox.Show("Bạn có muốn thêm thẻ với mã " + Ma + " không?", "Xác nhận!", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (dlr == DialogResult.Yes)
             {
@@ -672,7 +753,7 @@ namespace GUI
                     MessageBox.Show("Thêm Độc giả thất bại. Vui lòng kiểm tra lại dũ liệu");
                 else
                 {
-                    listPhieuMuon = pmBus.select("", 0);
+                    listPhieuMuon = pmBus.select();
                     MessageBox.Show("Thêm Độc giả thành công");
                     loadData_Vao_GridView(listPhieuMuon);
                     this.dataGridView_Data.FirstDisplayedScrollingRowIndex = dataGridView_Data.RowCount - 1;

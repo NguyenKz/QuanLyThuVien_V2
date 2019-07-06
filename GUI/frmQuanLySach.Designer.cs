@@ -71,7 +71,7 @@
             this.comboBox_PhuongThucTimKiem = new System.Windows.Forms.ComboBox();
             this.textBox_NoiDungTimKiem = new System.Windows.Forms.TextBox();
             this.dataGridView_DanhSachSach = new System.Windows.Forms.DataGridView();
-            this.flowLayoutPanel7 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label9 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
             this.flowLayoutPanel5.SuspendLayout();
@@ -240,7 +240,7 @@
             // 
             // dateTimePicker_NamXuatBan
             // 
-            this.dateTimePicker_NamXuatBan.CustomFormat = "dd/MM/yyyy";
+            this.dateTimePicker_NamXuatBan.CustomFormat = "yyyy";
             this.dateTimePicker_NamXuatBan.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dateTimePicker_NamXuatBan.Location = new System.Drawing.Point(87, 10);
             this.dateTimePicker_NamXuatBan.Name = "dateTimePicker_NamXuatBan";
@@ -297,6 +297,7 @@
             // panel6
             // 
             this.panel6.Controls.Add(this.textBox_TriGia);
+            this.panel6.Controls.Add(this.label9);
             this.panel6.Controls.Add(this.label6);
             this.panel6.Location = new System.Drawing.Point(3, 44);
             this.panel6.Name = "panel6";
@@ -307,7 +308,7 @@
             // 
             this.textBox_TriGia.Location = new System.Drawing.Point(87, 7);
             this.textBox_TriGia.Name = "textBox_TriGia";
-            this.textBox_TriGia.Size = new System.Drawing.Size(230, 20);
+            this.textBox_TriGia.Size = new System.Drawing.Size(164, 20);
             this.textBox_TriGia.TabIndex = 1;
             // 
             // label6
@@ -336,6 +337,7 @@
             this.dateTimePicker_NgayNhap.Name = "dateTimePicker_NgayNhap";
             this.dateTimePicker_NgayNhap.Size = new System.Drawing.Size(104, 20);
             this.dateTimePicker_NgayNhap.TabIndex = 1;
+            this.dateTimePicker_NgayNhap.ValueChanged += new System.EventHandler(this.dateTimePicker_NgayNhap_ValueChanged);
             // 
             // label7
             // 
@@ -454,6 +456,7 @@
             this.button_TimKiem.TabIndex = 2;
             this.button_TimKiem.Text = "Tìm kiếm";
             this.button_TimKiem.UseVisualStyleBackColor = true;
+            this.button_TimKiem.Click += new System.EventHandler(this.button_TimKiem_Click);
             // 
             // comboBox_PhuongThucTimKiem
             // 
@@ -480,19 +483,20 @@
             this.dataGridView_DanhSachSach.TabIndex = 1;
             this.dataGridView_DanhSachSach.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView_DanhSachSach_MouseClick);
             // 
-            // flowLayoutPanel7
+            // label9
             // 
-            this.flowLayoutPanel7.Location = new System.Drawing.Point(794, 12);
-            this.flowLayoutPanel7.Name = "flowLayoutPanel7";
-            this.flowLayoutPanel7.Size = new System.Drawing.Size(382, 467);
-            this.flowLayoutPanel7.TabIndex = 1;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(257, 10);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(32, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "đồng";
             // 
             // frmQuanLySach
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1251, 493);
-            this.Controls.Add(this.flowLayoutPanel7);
+            this.ClientSize = new System.Drawing.Size(798, 493);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "frmQuanLySach";
@@ -570,9 +574,9 @@
         private System.Windows.Forms.Button button_TimKiem;
         private System.Windows.Forms.ComboBox comboBox_PhuongThucTimKiem;
         private System.Windows.Forms.TextBox textBox_NoiDungTimKiem;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel7;
         private System.Windows.Forms.ComboBox comboBox_TrangThai;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label9;
     }
 }

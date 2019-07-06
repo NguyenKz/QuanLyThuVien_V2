@@ -17,7 +17,13 @@ namespace QLThuVien
     {
         private DocGiaBUS dgBus;
         private LoaiDocGiaBUS ldgBus;
+        
+        public const int TimToanBo = 0;
+        public const int TimBangMa = 1;
+        public const int TimBangTen = 2;
         List<DocGiaDTO> listDocGia;
+        List<QuyDinhDTO> listQD;
+        private QuyDinhBUS qdBUS;
         public frmQuanLyTheDocGia()
         {
             InitializeComponent();
@@ -214,6 +220,7 @@ namespace QLThuVien
             ldgBus = new LoaiDocGiaBUS();
             listDocGia = new List<DocGiaDTO>();
             loadData_Vao_GridView("", DocGiaDAL.TimToanBo);
+            
             loadLoaiDocGia_Combobox();
             AddDataToCmbTimKiem();
 
@@ -282,9 +289,9 @@ namespace QLThuVien
                 
                 dg.HanSuDung = int.Parse("0"+textBox_HanSuDung.Text);
 
-                if ((DateTime.Now.Subtract( dg.NgaySinh).TotalDays/365)<18|| (DateTime.Now.Subtract(dg.NgaySinh).TotalDays / 365) > 55)
+                if ((DateTime.Now.Subtract( dg.NgaySinh).TotalDays/365)<listQD[0].TuoiToiThieu|| (DateTime.Now.Subtract(dg.NgaySinh).TotalDays / 365) > listQD[0].TuoiToiDa)
                 {
-                    MessageBox.Show("Thêm thất bại, tuổi độc giả phải từ 18 đến 55.");
+                    MessageBox.Show("Thêm thất bại, tuổi độc giả phải từ"+ listQD[0].TuoiToiThieu+" đến "+ listQD[0].TuoiToiDa);
                     return;
                 }
 
@@ -425,11 +432,11 @@ namespace QLThuVien
         {
             int key = this.comboBox_TimKiem.SelectedIndex;
             switch (key) {
-                case DocGiaDAL.TimToanBo: {
+                case TimToanBo: {
                         loadData_Vao_GridView(listDocGia);
                         break;
                     }
-                case DocGiaDAL.TimBangMa: {
+                case TimBangMa: {
                         List<DocGiaDTO> ls = new List<DocGiaDTO>();
                         foreach (DocGiaDTO dg in listDocGia)
                         {
@@ -445,7 +452,7 @@ namespace QLThuVien
                         loadData_Vao_GridView(ls);
                         break;
                     }
-                case DocGiaDAL.TimBangTen:
+                case TimBangTen:
                     {
                         List<DocGiaDTO> ls = new List<DocGiaDTO>();
                         foreach (DocGiaDTO dg in listDocGia)
@@ -485,6 +492,11 @@ namespace QLThuVien
         }
 
         private void comboBox_LoaiDocGia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgv_QuanLyTheDocGia_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

@@ -32,9 +32,9 @@ namespace BUS
         //    return re;
         //}
 
-        public List<PhieuMuonDTO> select(String tag,int key)
+        public List<PhieuMuonDTO> select()
         {
-            return pmDAL.select(tag,key);
+            return pmDAL.select();
 
         }
     }

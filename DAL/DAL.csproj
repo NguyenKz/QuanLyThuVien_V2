@@ -54,6 +54,7 @@
     <Compile Include="LoaiDocGiaDAL.cs" />
     <Compile Include="PhieuMuonDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuyDinhDAL.cs" />
     <Compile Include="SachDAL.cs" />
     <Compile Include="TheLoaiDAL.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

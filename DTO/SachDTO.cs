@@ -15,7 +15,7 @@ namespace DTO
         int triGia;
         DateTime ngayNhap;
         DateTime namXuatBan;
-
+        String tìnhTrang;
         public string Ma { get => ma; set => ma = value; }
         public string TenSach { get => tenSach; set => tenSach = value; }
         public string MaTheLoai { get => maTheLoai; set => maTheLoai = value; }
@@ -25,5 +25,6 @@ namespace DTO
         public int TriGia { get => triGia; set => triGia = value; }
         public DateTime NgayNhap { get => ngayNhap; set => ngayNhap = value; }
         public DateTime NamXuatBan { get => namXuatBan; set => namXuatBan = value; }
+        public string TìnhTrang { get => tìnhTrang; set => tìnhTrang = value; }
     }
 }

@@ -62,7 +62,7 @@ namespace DAL
             string query = string.Empty;
             query += "UPDATE [dbo].[tblSach]  SET ";
             query += "[TenSach] = @TenSach,";
-            query += "[ngayNhap] = @ngayNhap,";
+        //    query += "[ngayNhap] = @ngayNhap,";
             query += " [tacGia] = @tacGia, ";
             query += "[nhaXuatBan] = @nhaXuatBan, ";
             query += "[maTheLoai] = @maTheLoai,";
@@ -81,7 +81,7 @@ namespace DAL
                     cmd.CommandText = query;
                     cmd.Parameters.AddWithValue("@maSach", temp.Ma);
                     cmd.Parameters.AddWithValue("@TenSach", temp.TenSach);
-                    cmd.Parameters.AddWithValue("@ngayNhap", temp.NgayNhap.Year + "-" + temp.NgayNhap.Month + "-" + temp.NgayNhap.Day);
+              //      cmd.Parameters.AddWithValue("@ngayNhap", temp.NgayNhap.Year + "-" + temp.NgayNhap.Month + "-" + temp.NgayNhap.Day);
                     cmd.Parameters.AddWithValue("@tacGia", temp.TacGia);
 
                     cmd.Parameters.AddWithValue("@nhaXuatBan", temp.NhaXuatBan);
@@ -150,34 +150,17 @@ namespace DAL
             return true;
         }
 
-        public List<SachDTO> select(String key, int Type)
+        public List<SachDTO> select(List<PhieuMuonDTO> listPhieuMuon)
         {
-
-
+            
+            
 
             Console.WriteLine("========================================================");
-            Console.WriteLine("Tim kiem doc gia bang: " + Type);
+
             string query = string.Empty;
-            string tag = "";
-            switch (Type)
-            {
-                case TimToanBo:
-                    query = "SELECT * FROM [dbo].[tblSach],[dbo].[tblTheLoai]";
-                    query += "WHERE [dbo].[tblSach].[maTheLoai]=[dbo].[tblTheLoai].[maTheLoai]";
-
-                    break;
-                case TimBangMa:
-                    query = "select * from[dbo].[tblTheDocGia],[dbo].[tblLoaiDocGia]";
-                    query += "WHERE [dbo].[tblTheDocGia].[maLoaiDocGia]=[dbo].[tblLoaiDocGia].[maLoaiDocGia] and [maDocGia] =@maDocGia";
-                    tag = "@maDocGia";
-                    break;
-                case TimBangTen:
-                    query = "select * from[dbo].[tblTheDocGia],[dbo].[tblLoaiDocGia]";
-                    query += "WHERE [dbo].[tblTheDocGia].[maLoaiDocGia]=[dbo].[tblLoaiDocGia].[maLoaiDocGia] and [hoVaTenDocGia] =@hoVaTenDocGia";
-                    tag = "@hoVaTenDocGia";
-                    break;
-
-            }
+            query = "SELECT * FROM [dbo].[tblSach],[dbo].[tblTheLoai] ";
+            query += "WHERE [dbo].[tblSach].[maTheLoai]=[dbo].[tblTheLoai].[maTheLoai]";
+ 
 
 
             List<SachDTO> listTemp = new List<SachDTO>();
@@ -190,11 +173,7 @@ namespace DAL
                     cmd.Connection = con;
                     cmd.CommandType = System.Data.CommandType.Text;
                     cmd.CommandText = query;
-                    if (tag.Length > 0)
-                    {
-                        cmd.Parameters.AddWithValue(tag, key);
-                    }
-
+            
 
                     try
                     {
@@ -222,6 +201,24 @@ namespace DAL
                                 temp.NgayNhap = DateTime.Parse(reader["ngayNhap"].ToString());
                                 temp.NamXuatBan = DateTime.Parse(reader["namXuatBan"].ToString());
 
+
+
+                                foreach(PhieuMuonDTO _temp in listPhieuMuon)
+                                {
+                                    if (temp.Ma == _temp.MaSach)
+                                    {
+                                        switch (_temp.TinhTrang) {
+                                            case PhieuMuonDTO.DungHan:
+                                            case PhieuMuonDTO.QuaHanVaDaTra:
+                                                temp.TìnhTrang="Có thể mượn";
+                                                break;
+                                            default:
+                                                temp.TìnhTrang = "Không thể mượn";
+                                                break;
+                                        }
+                                    }
+                                }
+                                if (temp.TìnhTrang==null) temp.TìnhTrang = "Có thể mượn";
                                 listTemp.Add(temp);
 
 
